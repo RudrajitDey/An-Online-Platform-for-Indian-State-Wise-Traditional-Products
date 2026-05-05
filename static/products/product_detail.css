@@ -1,0 +1,361 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+}
+
+.pd-container {
+    max-width: 1200px;
+    width: 95%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* TOP SECTION */
+.pd-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.pd-left {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.pd-left:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.pd-right {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.pd-img {
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pd-left h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.pd-left p {
+    color: #64748b;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.pd-price {
+    color: #dc2626;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border-radius: 12px;
+    border: 2px solid #fecaca;
+}
+
+.pd-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border: none;
+    padding: 12px 24px;
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pd-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.pd-btn:active {
+    transform: translateY(0);
+}
+
+.pd-right h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.pd-right p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+/* TABS */
+.pd-tabs {
+    display: flex;
+    background: white;
+    margin-top: 30px;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    gap: 8px;
+    overflow-x: auto;
+}
+
+.pd-tab {
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.pd-tab:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}
+
+.pd-tab.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.pd-tab-content {
+    background: white;
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    min-height: 200px;
+}
+
+.pd-section {
+    margin-bottom: 25px;
+}
+
+.pd-section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* RELATED PRODUCTS */
+.pd-related {
+    margin-top: 40px;
+}
+
+.pd-related h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.pd-related {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.pd-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #f1f5f9;
+}
+
+.pd-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: #3b82f6;
+}
+
+.pd-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.pd-card p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.pd-card .price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .pd-top {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .pd-left,
+    .pd-right {
+        padding: 20px;
+    }
+    
+    .pd-img {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pd-container {
+        width: 100%;
+        padding: 15px 10px;
+    }
+    
+    .pd-top {
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .pd-left,
+    .pd-right {
+        padding: 15px;
+    }
+    
+    .pd-img {
+        height: 200px;
+    }
+    
+    .pd-price {
+        font-size: 24px;
+        padding: 8px 16px;
+    }
+    
+    .pd-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .pd-tabs {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 6px;
+    }
+    
+    .pd-tab {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .pd-tab-content {
+        padding: 20px;
+    }
+    
+    .pd-related {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pd-container {
+        padding: 10px 5px;
+    }
+    
+    .pd-left,
+    .pd-right {
+        padding: 12px;
+    }
+    
+    .pd-img {
+        height: 180px;
+    }
+    
+    .pd-price {
+        font-size: 20px;
+        padding: 6px 12px;
+    }
+    
+    .pd-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .pd-tab {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .pd-tab-content {
+        padding: 15px;
+    }
+    
+    .pd-related {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+    }
+    
+    .pd-card {
+        padding: 15px;
+    }
+    
+    .pd-card img {
+        height: 120px;
+    }
+}

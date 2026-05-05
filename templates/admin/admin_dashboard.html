@@ -1,0 +1,265 @@
+{% extends "admin_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">🏪</span>
+                <span class="logo-text">Admin Panel</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="{% url 'admin_dashboard' %}" class="active">📊 Dashboard</a></li>
+                <li><a href="{% url 'seller_list' %}">👥 Seller List</a></li>
+                <li><a href="{% url 'seller_product_list' %}">📦 Products</a></li>
+                <li><a href="#">📈 Analytics</a></li>
+                <li><a href="#">💰 Revenue</a></li>
+                <li><a href="#">📋 Reports</a></li>
+                <li><a href="#">⚙️ Settings</a></li>
+                <li><a href="#">🚪 Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span>☰</span>
+                </button>
+                <h1>Dashboard Overview</h1>
+            </div>
+            <div class="header-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button>🔍</button>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-grid">
+            <div class="stat-card primary">
+                <div class="stat-icon">👥</div>
+                <div class="stat-content">
+                    <h3>11,580</h3>
+                    <p>Total Users</p>
+                    <span class="stat-change positive">+12.5%</span>
+                </div>
+            </div>
+            
+            <div class="stat-card success">
+                <div class="stat-icon">📦</div>
+                <div class="stat-content">
+                    <h3>45,580</h3>
+                    <p>Total Orders</p>
+                    <span class="stat-change positive">+8.2%</span>
+                </div>
+            </div>
+            
+            <div class="stat-card warning">
+                <div class="stat-icon">🏪</div>
+                <div class="stat-content">
+                    <h3>8,580</h3>
+                    <p>Total Vendors</p>
+                    <span class="stat-change positive">+15.3%</span>
+                </div>
+            </div>
+            
+            <div class="stat-card info">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <h3>$51,580</h3>
+                    <p>Total Earnings</p>
+                    <span class="stat-change positive">+22.1%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2>Revenue Overview</h2>
+                    <div class="chart-controls">
+                        <button class="chart-btn active">Week</button>
+                        <button class="chart-btn">Month</button>
+                        <button class="chart-btn">Year</button>
+                    </div>
+                </div>
+                <div class="chart-content">
+                    <div class="revenue-chart">
+                        <div class="chart-bars">
+                            <div class="bar" style="height: 60%"></div>
+                            <div class="bar" style="height: 80%"></div>
+                            <div class="bar" style="height: 45%"></div>
+                            <div class="bar" style="height: 90%"></div>
+                            <div class="bar" style="height: 70%"></div>
+                            <div class="bar" style="height: 85%"></div>
+                            <div class="bar" style="height: 95%"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                            <span>Sun</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-feed">
+                <h2>Recent Activity</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p>New vendor registered</p>
+                            <span>2 minutes ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon info">📦</div>
+                        <div class="activity-content">
+                            <p>Order #1234 completed</p>
+                            <span>15 minutes ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon warning">⚠</div>
+                        <div class="activity-content">
+                            <p>Low stock alert</p>
+                            <span>1 hour ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">💰</div>
+                        <div class="activity-content">
+                            <p>Payment received</p>
+                            <span>2 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Table -->
+        <section class="table-section">
+            <div class="table-header">
+                <h2>Best Selling Products</h2>
+                <button class="view-all-btn">View All</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Brand</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1</td>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">📱</div>
+                                    <span>DJI Mavic Pro</span>
+                                </div>
+                            </td>
+                            <td>Tech</td>
+                            <td>Apple</td>
+                            <td>$990</td>
+                            <td>
+                                <span class="stock-status in-stock">20</span>
+                            </td>
+                            <td>
+                                <span class="status-badge active">Active</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#2</td>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">📱</div>
+                                    <span>iPad Pro</span>
+                                </div>
+                            </td>
+                            <td>Tech</td>
+                            <td>LG</td>
+                            <td>$230</td>
+                            <td>
+                                <span class="stock-status in-stock">20</span>
+                            </td>
+                            <td>
+                                <span class="status-badge active">Active</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#3</td>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">💻</div>
+                                    <span>MacBook Pro</span>
+                                </div>
+                            </td>
+                            <td>Tech</td>
+                            <td>Apple</td>
+                            <td>$1,299</td>
+                            <td>
+                                <span class="stock-status low-stock">5</span>
+                            </td>
+                            <td>
+                                <span class="status-badge active">Active</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+</div>
+
+<!-- Mobile Menu Script -->
+<script>
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const sidebar = document.querySelector('.admin-sidebar');
+const overlay = document.getElementById('mobileOverlay');
+
+mobileMenuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+});
+
+overlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+});
+</script>
+
+{% endblock content %}

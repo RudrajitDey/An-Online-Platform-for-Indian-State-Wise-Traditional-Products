@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %}Medi Clinic{% endblock title %}
+
+<link rel="stylesheet" href="{% static 'home.css' %}?v=4.0">
+
+{% block content %}
+
+<section class="hero">
+
+  <div class="hero-banner">
+    <img src="{% static 'images/hero2p.jpg' %}" alt="">
+
+  </div>
+
+</section>
+
+<!-- ✅ Facilities -->
+
+<section class="features">
+
+  <div class="feature-card">
+    <i class="fa fa-money-bill"></i>
+    <div>
+      <h4>Easy Payment</h4>
+      <p>Flexible payment policies</p>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <i class="fa fa-shipping-fast"></i>
+    <div>
+      <h4>Free Shipping</h4>
+      <p>* Free shipping on order</p>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <i class="fa fa-sync-alt"></i>
+    <div>
+      <h4>100% Money Back</h4>
+      <p>If the item didn’t suit you</p>
+    </div>
+  </div>
+
+  <div class="feature-card">
+    <i class="fa fa-truck"></i>
+    <div>
+      <h4>Quick Delivery</h4>
+      <p>Fast & Quick Delivery</p>
+    </div>
+  </div>
+
+</section>
+
+
+
+<div class="content-section">
+  <div class="title">
+    <p>Shop By Categories</p>
+    <p id="offer-tag">Save Upto 60% on your Medicines</p>
+  </div>
+
+  <!-- ✅ CATEGORY SECTION -->
+  <div class="categories-wrapper">
+  <div class="categories">
+
+    {% for s in states %}
+    <div class="full-box" onclick="filterCategory('{{ s.id }}', this)">
+      <div class="box">
+        <img src="{{ s.image.url }}" alt="">
+      </div>
+      <p>{{ s.name }}</p>
+    </div>
+    {% endfor %}
+
+    <!-- duplicate -->
+    {% for s in states %}
+    <div class="full-box" onclick="filterCategory('{{ s.id }}', this)">
+      <div class="box">
+        <img src="{{ s.image.url }}" alt="">
+      </div>
+      <p>{{ s.name }}</p>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+  <!-- ✅ SUBCATEGORY CARDS (IMPORTANT CHANGE) -->
+  <div class="all-product">
+
+  {% for s in states %}
+    {% for cat in s.categories.all %}
+
+      <a href="{% url 'category_products' cat.slug %}">
+        <div class="card-box" data-category="{{ s.id }}">
+
+        <a href="{% url 'category_products' cat.slug %}">
+
+          <div class="product-img">
+            <img src="{{ cat.image.url }}" alt="">
+          </div>
+
+          <div class="product-name">
+            <p>{{ cat.name }}</p>
+          </div>
+
+      </div></a>
+
+    {% endfor %}
+  {% endfor %}
+
+</div>
+<div class="full-faq">
+  <div class="faq-title">
+    <h2>FAQs</h2>
+  </div>
+  <div class="faq-section">
+  
+    <div class="faq-container">
+
+      {% for faq in faqs %}
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>{{faq.faq_question}}</span>
+              <span class="icon">⌃</span>
+          </div>
+          <div class="faq-answer">
+            <p>{{faq.faq_answer}}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="bottom-section">
+  <div class="text-section">
+    Order medicines online from Truemeds at the best prices.
+    <div class="lower-text">
+      An online pharmacy you can trust.
+    </div>
+  </div>
+  <div class="image-section">
+    <img src="{% static 'pherma.png' %}" alt="">
+  </div>
+</div>
+
+<div class="footer">
+  
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("navMenu").classList.toggle("active");
+}
+
+function filterCategory(categoryId, element) {
+    let products = document.querySelectorAll('.card-box');
+    let categories = document.querySelectorAll('.full-box');
+
+    // remove active
+    categories.forEach(c => c.classList.remove('active'));
+
+    // highlight clicked
+    element.classList.add('active');
+
+    // filter
+    products.forEach(product => {
+        if (product.getAttribute('data-category') == categoryId) {
+            product.style.display = "block";
+        } else {
+            product.style.display = "none";
+        }
+    });
+}
+
+function toggleFAQ(element) {
+    let item = element.parentElement;
+
+    document.querySelectorAll('.faq-item').forEach(faq => {
+        if (faq !== item) {
+            faq.classList.remove('active');
+        }
+    });
+
+    item.classList.toggle('active');
+}
+</script>
+{% endblock content %}
+

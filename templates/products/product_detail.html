@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %}Products{% endblock title %}
+
+<link rel="stylesheet" href="{% static 'products/product_detail.css' %}?v=5.0">
+
+{% block content %}
+
+
+<div class="pd-container">
+
+    <!-- TOP SECTION -->
+    <div class="pd-top">
+
+        <div class="pd-left">
+            <img src="{{ product.image.url }}" class="pd-img">
+
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.brand }}</p>
+
+            <p class="pd-price">₹{{ product.price }}</p>
+
+            <a href="{% url 'add_to_cart' product.id 'product' %}"><button class="pd-btn">Add to Cart</button></a>
+        </div>
+
+        <div class="pd-right">
+            <h4>Recommendation</h4>
+            <p>Similar product suggestion</p>
+        </div>
+
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    <h3>Customers also bought</h3>
+    <div class="pd-related">
+        {% for p in related_products %}
+        <div class="pd-card">
+            <img src="{{ p.image.url }}">
+            <p>{{ p.name }}</p>
+            <p>₹{{ p.price}}</p>
+            <button class="pd-btn">Add</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- TABS -->
+    <div class="pd-tabs">
+        {% for section in product.contents.all %}
+            <div class="pd-tab">{{ section.get_section_type_display }}</div>
+        {% endfor %}
+    </div>
+
+    <!-- CONTENT -->
+    <div class="pd-tab-content">
+        {% for section in product.contents.all %}
+        <div class="pd-section">
+            <h3>{{ section.get_section_type_display }}</h3>
+
+            <ul>
+                {% for p in section.points.all %}
+                    <li>{{ p.text }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+

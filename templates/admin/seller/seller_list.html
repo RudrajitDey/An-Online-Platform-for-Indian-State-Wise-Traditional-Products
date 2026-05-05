@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Seller List{% endblock title %}
+
+<link rel="stylesheet" href="{% static 'admin/seller/seller_list.css' %}?v=2.0">
+
+{% block content %}
+<div class="container">
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="{% url 'admin_dashboard' %}">📊 Dashboard</a></li>
+            <li><a href="{% url 'seller_list' %}" class="active">👥 Seller List</a></li>
+            <li><a href="{% url 'seller_product_list' %}">📦 Products</a></li>
+            <li><a href="#">📈 Analytics</a></li>
+            <li><a href="#">💰 Revenue</a></li>
+            <li><a href="#">📋 Reports</a></li>
+            <li><a href="#">⚙️ Settings</a></li>
+            <li><a href="#">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Vendor Management</h1>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value">{{ vendors.count }}</div>
+                    <div class="stat-label">Total Vendors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ vendors|dictsort:'status'|slice:':1'|first|default:0 }}</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ vendors|dictsort:'status'|slice:':1'|last|default:0 }}</div>
+                    <div class="stat-label">Approved</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Shop Name</th>
+                        <th>Owner Name</th>
+                        <th>Phone</th>
+                        <th>GST</th>
+                        <th>City</th>
+                        <th>Status</th>
+                        <th>Documents</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in vendors %}
+                    <tr>
+                        <td>{{ v.id }}</td>
+                        <td>{{ v.shop_name }}</td>
+                        <td>{{ v.owner_name }}</td>
+                        <td>{{ v.phone }}</td>
+                        <td>{{ v.gst_number }}</td>
+                        <td>{{ v.city }}</td>
+
+                        <td>
+                            {% if v.status == 'approved' %}
+                                <span class="badge approved">Approved</span>
+                            {% elif v.status == 'pending' %}
+                                <span class="badge pending">Pending</span>
+                            {% else %}
+                                <span class="badge rejected">Rejected</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{{ v.gst_certificate.url }}" class="doc-link" target="_blank">GST</a> |
+                            <a href="{{ v.drug_license_file.url }}" class="doc-link" target="_blank">License</a> |
+                            <a href="{{ v.id_proof.url }}" class="doc-link" target="_blank">ID</a>
+                        </td>
+
+                        <td>
+                            <a href="{% url 'approve_vendor' v.id %}" class="btn btn-approve">Approve</a>
+                            <a href="{% url 'reject_vendor' v.id %}" class="btn btn-reject">Reject</a>
+                            <a href="{% url 'delete_vendor' v.id %}" 
+                               class="btn btn-delete"
+                               onclick="return confirm('Delete this vendor?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

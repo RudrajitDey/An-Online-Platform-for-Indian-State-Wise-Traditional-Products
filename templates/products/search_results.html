@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %}Medi Clinic{% endblock title %}
+
+<link rel="stylesheet" href="{% static 'search/search_results.css' %}?v=1.0">
+
+
+
+{% block content %}
+
+<p class="result-count">
+  {{ total_results }} products found
+</p>
+
+{% if results %}
+<div class="product-grid">
+
+    {% for product in results %}
+    <div class="product-card">
+
+        <!-- IMAGE -->
+        <div class="product-img">
+            <img src="
+                {% if product.image %}
+                    {{ product.image.url }}
+                {% else %}
+                    /static/images/default.png
+                {% endif %}
+            " alt="{{ product.name }}">
+        </div>
+
+        <!-- DETAILS -->
+        <div class="product-info">
+
+            <h4 class="product-name">
+                {{ product.name }}
+            </h4>
+
+            <p class="product-price">
+                ₹{{ product.price }}
+            </p>
+
+            <!-- BUTTON -->
+            <a href="{% url 'product_detail' product.slug %}" class="view-btn">
+                View Details
+            </a>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<!-- EMPTY RESULT DESIGN -->
+<div class="no-results">
+    <img src="https://cdn-icons-png.flaticon.com/512/7486/7486740.png" alt="">
+    <h3>No results found 😕</h3>
+    <p>Try searching with different keywords</p>
+</div>
+
+{% endif %}
+
+{% endblock content%}

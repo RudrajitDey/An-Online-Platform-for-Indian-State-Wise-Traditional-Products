@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %}Products{% endblock title %}
+
+<link rel="stylesheet" href="{% static 'products/category_products.css' %}?v=3.0">
+
+{% block content %}
+
+
+
+<h2 class="shop-title">{{ category.name }}</h2>
+
+<div class="shop-grid">
+    {% for p in products %}
+    
+    <div class="shop-card">
+        <a href="{% url 'product_detail' p.slug %}" class="shop-link">
+        
+        <div class="shop-image-box">
+            <img src="{{ p.image.url }}" alt="{{ p.name }}">
+        </div>
+
+        <div class="shop-content">
+            <h4>{{ p.name }}</h4>
+
+            <div class="shop-price">{{ p.price }}</div>
+
+            <a href="{% url 'add_to_cart' p.id 'product' %}">
+                <button class="shop-btn">Add to Cart</button>
+            </a>
+        </div>
+
+        </a>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

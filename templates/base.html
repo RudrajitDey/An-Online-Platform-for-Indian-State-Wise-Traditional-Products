@@ -1,0 +1,211 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Traditional Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v=4.0">
+    <link rel="stylesheet" href="{% static 'admin/admin_dashboard.css' %}?v=4.0">
+    <link rel="stylesheet" href="{% static 'admin/seller/seller_list.css' %}?v=2.0">
+    <link rel="stylesheet" href="{% static 'search/search_results.css' %}?v=2.0">
+
+    <link rel="stylesheet" href="{% static 'products/product_detail.css' %}?v=4.0">
+    <link rel="stylesheet" href="{% static 'products/category_products.css' %}?v=3.0">
+
+    <script src="https://www.paypal.com/sdk/js?client-id=Ac0Od556aUEX1pzwe6NeS4bjMBlJlQ4AJfOpyTXXFM4_k4wCFJqTEbEX3WRmPLg9xmHW2Fdcdr8c58BJ&currency=USD"></script>
+    
+</head>
+<body>
+<nav class="navbar">
+
+  <div class="top-navbar">
+
+   <!-- LEFT -->
+    <div class="nav-left">
+      <i class="fa fa-bars toggle-btn"></i>
+      <img src="{% static 'images/logop.png' %}" alt="logo">
+    </div>
+
+
+  <!-- SEARCH BAR -->
+  <form action="{% url 'search' %}" method="GET">
+  <div class="nav-center">
+    <div class="search-box">
+      <input  type="text" 
+          name="q" 
+          value="{{ request.GET.q }}" 
+          placeholder="Search medicines, brands, categories..."
+          autocomplete="off">
+
+      <select>
+        <option>All Categories</option>
+        {% for s in states %}
+        <option>{{s.name}}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+     
+    </div>
+  </div> </form>
+
+  <!-- RIGHT SIDE -->
+  <div class="nav-right">
+    
+    <div class="contact">
+      <span>For more information contact</span>
+      <p>+91-7908264763</p>
+    </div>
+
+    <a href="{% url 'cart' %}">
+    <div class="icons">
+     <i class="fa fa-shopping-cart"></i>
+      {% if cart_count > 0 %}
+      <span class="cart-count">{{cart_count}}</span>
+      {% endif %}
+    </div></a>
+
+    {% if user.id is none %}
+    <div class="user">
+      <p>Hello,</p>
+      <a href="{% url 'login' %}">Login/Register</a>
+    </div>
+    {% else %}
+    <div class="user">
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endif %}
+
+
+  </div>
+
+</div>
+</nav>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar" id="sidebar">
+  <i class="fa fa-times close-btn" id="closeBtn"></i>
+
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Furniture</a></li>
+    <li><a href="#">Decor</a></li>
+    <li><a href="#">Cart</a></li>
+    <li><a href="#">Login</a></li>
+  </ul>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- ===== JS ===== -->
+<script>
+const toggleBtn = document.querySelector(".toggle-btn");
+const sidebar = document.getElementById("sidebar");
+const closeBtn = document.getElementById("closeBtn");
+const overlay = document.getElementById("overlay");
+
+toggleBtn.addEventListener("click", () => {
+  sidebar.classList.add("active");
+  overlay.classList.add("active");
+});
+
+closeBtn.addEventListener("click", () => {
+  sidebar.classList.remove("active");
+  overlay.classList.remove("active");
+});
+
+overlay.addEventListener("click", () => {
+  sidebar.classList.remove("active");
+  overlay.classList.remove("active");
+});
+</script>
+
+{% block content %}
+{% endblock content %}
+
+<footer class="footer-Section">
+  <div class="outer-footer">
+    <div class="footer-logo-section">
+      <div class="outer-logo">
+        <div class="full-logo">
+          <img src="{% static 'pherma.png' %}" alt="logo">
+          <p>PlatinumRX</p>
+        </div>
+      </div>
+      <p>RUDRAJIT PRIVATE LIMITED</p>
+    </div>
+    <div class="footer-allitem">
+      <div class="footer-item-box">
+        <div class="item-title">
+          <p>Know Us</p>
+        </div>
+       <div class="all-item">
+          <ul>
+            <li><a href="{% url 'become_seller' %}">Start Selling</a></li>
+            <li><a href="#">How to buy Medicines</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Editorial Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>  
+      </div>
+
+      <div class="footer-item-box">
+        <div class="item-title">
+          <p>Health Resources</p>
+        </div>
+        <div class="all-item">
+          <ul>
+            <li><a href="">All Blogs</a></li>
+            <li><a href="">All Salts</a></li>
+            <li><a href="">All Diseases</a></li>
+            <li><a href="">All Brands</a></li>
+            <li><a href="">All Medicines</a></li>
+            <li><a href="">All Health Products</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-item-box">
+        <div class="item-title">
+          <p>Health Resources</p>
+        </div>
+        <div class="all-item">
+          <ul>
+            <li><a href="">All Blogs</a></li>
+            <li><a href="">All Salts</a></li>
+            <li><a href="">All Diseases</a></li>
+            <li><a href="">All Brands</a></li>
+            <li><a href="">All Medicines</a></li>
+            <li><a href="">All Health Products</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-item-box">
+        <div class="item-title">
+          <p>Health Resources</p>
+        </div>
+        <div class="all-item">
+          <ul>
+            <li><a href="">All Blogs</a></li>
+            <li><a href="">All Salts</a></li>
+            <li><a href="">All Diseases</a></li>
+            <li><a href="">All Brands</a></li>
+            <li><a href="">All Medicines</a></li>
+            <li><a href="">All Health Products</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
