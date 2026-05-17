@@ -1,103 +1,587 @@
 {% extends "base.html" %}
-
 {% load static %}
 
-{% block title %}Seller List{% endblock title %}
-
-<link rel="stylesheet" href="{% static 'admin/seller/seller_list.css' %}?v=2.0">
+{% block title %}Vendor Management{% endblock %}
 
 {% block content %}
-<div class="container">
-    <!-- Sidebar -->
-    <div class="admin-sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-            <li><a href="{% url 'admin_dashboard' %}">📊 Dashboard</a></li>
-            <li><a href="{% url 'seller_list' %}" class="active">👥 Seller List</a></li>
-            <li><a href="{% url 'seller_product_list' %}">📦 Products</a></li>
-            <li><a href="#">📈 Analytics</a></li>
-            <li><a href="#">💰 Revenue</a></li>
-            <li><a href="#">📋 Reports</a></li>
-            <li><a href="#">⚙️ Settings</a></li>
-            <li><a href="#">🚪 Logout</a></li>
-        </ul>
-    </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Header -->
-        <div class="header">
+<style>
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+.vendor-page{
+    width:100%;
+    padding:30px;
+}
+
+/* =========================================
+   TOP HEADER
+========================================= */
+
+.vendor-header{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    border-radius:28px;
+    padding:35px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:25px;
+    margin-bottom:30px;
+    position:relative;
+    overflow:hidden;
+}
+
+.vendor-header::before{
+    content:'';
+    position:absolute;
+    width:280px;
+    height:280px;
+    background:rgba(255,255,255,.08);
+    border-radius:50%;
+    right:-80px;
+    top:-80px;
+}
+
+.vendor-header-left{
+    position:relative;
+    z-index:2;
+}
+
+.vendor-header-left h1{
+    font-size:38px;
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+.vendor-header-left p{
+    font-size:15px;
+    opacity:.9;
+}
+
+/* =========================================
+   STATS
+========================================= */
+
+.vendor-stats{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    position:relative;
+    z-index:2;
+}
+
+.stats-card{
+    background:rgba(255,255,255,.14);
+    backdrop-filter:blur(10px);
+    border-radius:18px;
+    padding:18px 22px;
+    min-width:160px;
+}
+
+.stats-card h2{
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.stats-card p{
+    font-size:13px;
+    opacity:.9;
+}
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.vendor-table-wrapper{
+    background:white;
+    border-radius:28px;
+    padding:28px;
+    box-shadow:0 10px 35px rgba(15,23,42,.06);
+    overflow-x:auto;
+}
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
+.table-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.table-top h2{
+    font-size:24px;
+    font-weight:700;
+}
+
+.search-bar{
+    width:320px;
+    max-width:100%;
+}
+
+.search-bar input{
+    width:100%;
+    height:48px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    padding:0 18px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    font-size:14px;
+}
+
+.search-bar input:focus{
+    border-color:#2563eb;
+    background:white;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.vendor-table{
+    width:100%;
+    min-width:1150px;
+    border-collapse:collapse;
+}
+
+.vendor-table thead{
+    background:#f8fafc;
+}
+
+.vendor-table th{
+    padding:18px 16px;
+    text-align:left;
+    font-size:13px;
+    color:#475569;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.vendor-table td{
+    padding:18px 16px;
+    border-top:1px solid #f1f5f9;
+    font-size:14px;
+    color:#334155;
+}
+
+.vendor-table tbody tr{
+    transition:.3s;
+}
+
+.vendor-table tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.status-badge{
+    padding:7px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+    text-transform:capitalize;
+}
+
+.approved{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.pending{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.rejected{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+/* =========================================
+   DOCUMENT LINKS
+========================================= */
+
+.doc-links{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.doc-links a{
+    text-decoration:none;
+    background:#eff6ff;
+    color:#2563eb;
+    padding:7px 12px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.doc-links a:hover{
+    background:#2563eb;
+    color:white;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.action-group{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.action-btn{
+    padding:9px 14px;
+    border-radius:10px;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.approve-btn{
+    background:#16a34a;
+    color:white;
+}
+
+.approve-btn:hover{
+    background:#15803d;
+    transform:translateY(-2px);
+}
+
+.reject-btn{
+    background:#dc2626;
+    color:white;
+}
+
+.reject-btn:hover{
+    background:#b91c1c;
+    transform:translateY(-2px);
+}
+
+.delete-btn{
+    background:#334155;
+    color:white;
+}
+
+.delete-btn:hover{
+    background:#0f172a;
+    transform:translateY(-2px);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:992px){
+
+    .vendor-header{
+        padding:28px;
+    }
+
+    .vendor-header-left h1{
+        font-size:30px;
+    }
+
+    .vendor-stats{
+        width:100%;
+    }
+
+    .stats-card{
+        flex:1;
+    }
+}
+
+@media(max-width:768px){
+
+    .vendor-page{
+        padding:15px;
+    }
+
+    .vendor-header{
+        border-radius:22px;
+        padding:24px;
+    }
+
+    .vendor-header-left h1{
+        font-size:26px;
+    }
+
+    .vendor-stats{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .stats-card{
+        width:100%;
+    }
+
+    .vendor-table-wrapper{
+        padding:18px;
+        border-radius:20px;
+    }
+
+    .table-top{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .table-top h2{
+        font-size:20px;
+    }
+
+    .vendor-table{
+        min-width:1000px;
+    }
+}
+
+@media(max-width:480px){
+
+    .vendor-header-left h1{
+        font-size:24px;
+    }
+
+    .stats-card h2{
+        font-size:24px;
+    }
+
+    .vendor-table th,
+    .vendor-table td{
+        padding:14px 10px;
+        font-size:12px;
+    }
+
+    .action-btn{
+        padding:8px 12px;
+        font-size:11px;
+    }
+
+    .doc-links a{
+        font-size:11px;
+        padding:6px 10px;
+    }
+}
+
+</style>
+
+
+
+<div class="vendor-page">
+
+    <!-- HEADER -->
+    <div class="vendor-header">
+
+        <div class="vendor-header-left">
+
             <h1>Vendor Management</h1>
-            <div class="header-stats">
-                <div class="stat-item">
-                    <div class="stat-value">{{ vendors.count }}</div>
-                    <div class="stat-label">Total Vendors</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">{{ vendors|dictsort:'status'|slice:':1'|first|default:0 }}</div>
-                    <div class="stat-label">Pending</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">{{ vendors|dictsort:'status'|slice:':1'|last|default:0 }}</div>
-                    <div class="stat-label">Approved</div>
-                </div>
+
+            <p>
+                Manage all marketplace vendors and approvals
+            </p>
+
+        </div>
+
+
+        <div class="vendor-stats">
+
+            <div class="stats-card">
+                <h2>{{ vendors.count }}</h2>
+                <p>Total Vendors</p>
             </div>
+
+            <div class="stats-card">
+                <h2>{{ pending_vendors }}</h2>
+                <p>Pending Vendors</p>
+            </div>
+
+            <div class="stats-card">
+                <h2>{{ approved_vendors }}</h2>
+                <p>Approved Vendors</p>
+            </div>
+
         </div>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Shop Name</th>
-                        <th>Owner Name</th>
-                        <th>Phone</th>
-                        <th>GST</th>
-                        <th>City</th>
-                        <th>Status</th>
-                        <th>Documents</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for v in vendors %}
-                    <tr>
-                        <td>{{ v.id }}</td>
-                        <td>{{ v.shop_name }}</td>
-                        <td>{{ v.owner_name }}</td>
-                        <td>{{ v.phone }}</td>
-                        <td>{{ v.gst_number }}</td>
-                        <td>{{ v.city }}</td>
-
-                        <td>
-                            {% if v.status == 'approved' %}
-                                <span class="badge approved">Approved</span>
-                            {% elif v.status == 'pending' %}
-                                <span class="badge pending">Pending</span>
-                            {% else %}
-                                <span class="badge rejected">Rejected</span>
-                            {% endif %}
-                        </td>
-
-                        <td>
-                            <a href="{{ v.gst_certificate.url }}" class="doc-link" target="_blank">GST</a> |
-                            <a href="{{ v.drug_license_file.url }}" class="doc-link" target="_blank">License</a> |
-                            <a href="{{ v.id_proof.url }}" class="doc-link" target="_blank">ID</a>
-                        </td>
-
-                        <td>
-                            <a href="{% url 'approve_vendor' v.id %}" class="btn btn-approve">Approve</a>
-                            <a href="{% url 'reject_vendor' v.id %}" class="btn btn-reject">Reject</a>
-                            <a href="{% url 'delete_vendor' v.id %}" 
-                               class="btn btn-delete"
-                               onclick="return confirm('Delete this vendor?')">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
     </div>
+
+
+
+    <!-- TABLE -->
+    <div class="vendor-table-wrapper">
+
+        <div class="table-top">
+
+            <h2>All Vendors</h2>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search vendor...">
+            </div>
+
+        </div>
+
+
+
+        <table class="vendor-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Shop Name</th>
+                    <th>Owner</th>
+                    <th>Phone</th>
+                    <th>GST</th>
+                    <th>City</th>
+                    <th>Status</th>
+                    <th>Documents</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for v in vendors %}
+
+                <tr>
+
+                    <td>#{{ v.id }}</td>
+
+                    <td>{{ v.shop_name }}</td>
+
+                    <td>{{ v.owner_name }}</td>
+
+                    <td>{{ v.phone }}</td>
+
+                    <td>{{ v.gst_number }}</td>
+
+                    <td>{{ v.city }}</td>
+
+                    <td>
+
+                        {% if v.status == 'approved' %}
+
+                            <span class="status-badge approved">
+                                Approved
+                            </span>
+
+                        {% elif v.status == 'pending' %}
+
+                            <span class="status-badge pending">
+                                Pending
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge rejected">
+                                Rejected
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <div class="doc-links">
+
+                            <a href="{{ v.gst_certificate.url }}" target="_blank">
+                                GST
+                            </a>
+
+                            <a href="{{ v.drug_license_file.url }}" target="_blank">
+                                License
+                            </a>
+
+                            <a href="{{ v.id_proof.url }}" target="_blank">
+                                ID
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <div class="action-group">
+
+                            <a href="{% url 'approve_vendor' v.id %}"
+                               class="action-btn approve-btn">
+
+                                Approve
+
+                            </a>
+
+                            <a href="{% url 'reject_vendor' v.id %}"
+                               class="action-btn reject-btn">
+
+                                Reject
+
+                            </a>
+
+                            <a href="{% url 'delete_vendor' v.id %}"
+                               class="action-btn delete-btn"
+                               onclick="return confirm('Delete this vendor?')">
+
+                                Delete
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="9" style="text-align:center;padding:40px;">
+
+                        No vendors found
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
 
-{% endblock content %}
+{% endblock %}

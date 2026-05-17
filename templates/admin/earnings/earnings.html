@@ -1,0 +1,631 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Admin Earnings{% endblock title %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#f1f5f9;
+    font-family:'Inter',sans-serif;
+    color:#0f172a;
+}
+
+/* =========================================
+   MAIN AREA
+========================================= */
+
+.earnings-main{
+    padding:30px;
+    min-height:100vh;
+}
+
+/* =========================================
+   TOP HEADER
+========================================= */
+
+.earnings-topbar{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    border-radius:28px;
+    padding:32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    color:white;
+    margin-bottom:30px;
+    position:relative;
+    overflow:hidden;
+}
+
+.earnings-topbar::before{
+    content:'';
+    position:absolute;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    right:-90px;
+    top:-90px;
+}
+
+.earnings-heading{
+    position:relative;
+    z-index:2;
+}
+
+.earnings-heading h1{
+    font-size:36px;
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+.earnings-heading p{
+    font-size:15px;
+    opacity:.9;
+}
+
+/* =========================================
+   HEADER BUTTON
+========================================= */
+
+.dashboard-btn{
+    position:relative;
+    z-index:2;
+    text-decoration:none;
+    background:white;
+    color:#2563eb;
+    padding:14px 22px;
+    border-radius:14px;
+    font-size:14px;
+    font-weight:700;
+    transition:.3s;
+}
+
+.dashboard-btn:hover{
+    transform:translateY(-2px);
+    background:#eff6ff;
+}
+
+/* =========================================
+   STATS GRID
+========================================= */
+
+.earnings-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
+    margin-bottom:30px;
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.earning-card{
+    background:white;
+    border-radius:24px;
+    padding:24px;
+    box-shadow:0 10px 35px rgba(15,23,42,.05);
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.earning-card:hover{
+    transform:translateY(-5px);
+}
+
+.earning-card::before{
+    content:'';
+    position:absolute;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    right:-30px;
+    top:-30px;
+    opacity:.08;
+}
+
+/* CARD COLORS */
+
+.card-total::before{
+    background:#16a34a;
+}
+
+.card-completed::before{
+    background:#2563eb;
+}
+
+.card-pending::before{
+    background:#f59e0b;
+}
+
+.card-monthly::before{
+    background:#9333ea;
+}
+
+.card-tax::before{
+    background:#0ea5e9;
+}
+
+.card-average::before{
+    background:#ea580c;
+}
+
+/* =========================================
+   CARD TOP
+========================================= */
+
+.card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.card-icon{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    color:white;
+}
+
+.card-total .card-icon{
+    background:#16a34a;
+}
+
+.card-completed .card-icon{
+    background:#2563eb;
+}
+
+.card-pending .card-icon{
+    background:#f59e0b;
+}
+
+.card-monthly .card-icon{
+    background:#9333ea;
+}
+
+.card-tax .card-icon{
+    background:#0ea5e9;
+}
+
+.card-average .card-icon{
+    background:#ea580c;
+}
+
+.card-growth{
+    font-size:12px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:30px;
+    background:#dcfce7;
+    color:#15803d;
+}
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.card-amount{
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:8px;
+    color:#0f172a;
+}
+
+.card-title{
+    font-size:14px;
+    color:#64748b;
+    font-weight:500;
+}
+
+/* =========================================
+   SUMMARY SECTION
+========================================= */
+
+.summary-wrapper{
+    background:white;
+    border-radius:26px;
+    padding:28px;
+    box-shadow:0 10px 35px rgba(15,23,42,.05);
+    margin-bottom:30px;
+}
+
+.summary-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.summary-header h2{
+    font-size:24px;
+    font-weight:700;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.summary-box{
+    background:#f8fafc;
+    border-radius:18px;
+    padding:22px;
+    border:1px solid #e2e8f0;
+}
+
+.summary-box h3{
+    font-size:15px;
+    color:#64748b;
+    margin-bottom:12px;
+}
+
+.summary-box h1{
+    font-size:34px;
+    color:#0f172a;
+}
+
+/* =========================================
+   RECENT ORDERS
+========================================= */
+
+.recent-orders{
+    background:white;
+    border-radius:26px;
+    padding:28px;
+    box-shadow:0 10px 35px rgba(15,23,42,.05);
+    overflow-x:auto;
+}
+
+.recent-orders h2{
+    font-size:24px;
+    margin-bottom:24px;
+}
+
+.orders-table{
+    width:100%;
+    min-width:900px;
+    border-collapse:collapse;
+}
+
+.orders-table thead{
+    background:#f8fafc;
+}
+
+.orders-table th{
+    padding:18px 16px;
+    text-align:left;
+    font-size:13px;
+    color:#475569;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.orders-table td{
+    padding:18px 16px;
+    border-top:1px solid #f1f5f9;
+    font-size:14px;
+}
+
+.orders-table tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-badge{
+    padding:7px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.status-completed{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.status-new{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.status-accepted{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.status-cancelled{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:768px){
+
+    .earnings-main{
+        padding:90px 15px 20px;
+    }
+
+    .earnings-topbar{
+        padding:24px;
+        border-radius:22px;
+    }
+
+    .earnings-heading h1{
+        font-size:28px;
+    }
+
+    .summary-wrapper,
+    .recent-orders{
+        padding:18px;
+        border-radius:20px;
+    }
+
+    .orders-table{
+        min-width:850px;
+    }
+}
+
+@media(max-width:480px){
+
+    .earnings-heading h1{
+        font-size:24px;
+    }
+
+    .card-amount{
+        font-size:26px;
+    }
+
+    .summary-box h1{
+        font-size:28px;
+    }
+
+    .orders-table th,
+    .orders-table td{
+        padding:14px 10px;
+        font-size:12px;
+    }
+}
+
+</style>
+
+<div class="earnings-main">
+
+    <!-- TOPBAR -->
+
+    <div class="earnings-topbar">
+
+        <div class="earnings-heading">
+            <h1>Admin Earnings</h1>
+            <p>Monitor platform revenue and earnings analytics</p>
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}" class="dashboard-btn">
+            ← Dashboard
+        </a>
+
+    </div>
+
+    <!-- EARNINGS GRID -->
+
+    <div class="earnings-grid">
+
+        <div class="earning-card card-total">
+            <div class="card-top">
+                <div class="card-icon">💰</div>
+                <div class="card-growth">+12%</div>
+            </div>
+
+            <div class="card-amount">
+                ₹{{ total_earnings|floatformat:2 }}
+            </div>
+
+            <div class="card-title">
+                Total Earnings
+            </div>
+        </div>
+
+        <div class="earning-card card-completed">
+            <div class="card-top">
+                <div class="card-icon">✅</div>
+                <div class="card-growth">+8%</div>
+            </div>
+
+            <div class="card-amount">
+                ₹{{ completed_earnings|floatformat:2 }}
+            </div>
+
+            <div class="card-title">
+                Completed Earnings
+            </div>
+        </div>
+
+        <div class="earning-card card-pending">
+            <div class="card-top">
+                <div class="card-icon">⏳</div>
+            </div>
+
+            <div class="card-amount">
+                ₹{{ pending_earnings|floatformat:2 }}
+            </div>
+
+            <div class="card-title">
+                Pending Earnings
+            </div>
+        </div>
+
+        <div class="earning-card card-monthly">
+            <div class="card-top">
+                <div class="card-icon">📅</div>
+            </div>
+
+            <div class="card-amount">
+                ₹{{ monthly_earnings|floatformat:2 }}
+            </div>
+
+            <div class="card-title">
+                Monthly Earnings
+            </div>
+        </div>
+
+        <div class="earning-card card-tax">
+            <div class="card-top">
+                <div class="card-icon">📊</div>
+            </div>
+
+            <div class="card-amount">
+                ₹{{ total_tax|floatformat:2 }}
+            </div>
+
+            <div class="card-title">
+                Total Tax Collected
+            </div>
+        </div>
+
+        <div class="earning-card card-average">
+            <div class="card-top">
+                <div class="card-icon">🧾</div>
+            </div>
+
+            <div class="card-amount">
+                ₹{{ average_order_value|floatformat:2 }}
+            </div>
+
+            <div class="card-title">
+                Average Order Value
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SUMMARY -->
+
+    <div class="summary-wrapper">
+
+        <div class="summary-header">
+            <h2>Orders Summary</h2>
+        </div>
+
+        <div class="summary-grid">
+
+            <div class="summary-box">
+                <h3>Total Orders</h3>
+                <h1>{{ total_orders_count }}</h1>
+            </div>
+
+            <div class="summary-box">
+                <h3>Completed Orders</h3>
+                <h1>{{ completed_orders_count }}</h1>
+            </div>
+
+            <div class="summary-box">
+                <h3>Pending Orders</h3>
+                <h1>{{ pending_orders_count }}</h1>
+            </div>
+
+            <div class="summary-box">
+                <h3>Accepted Orders</h3>
+                <h1>{{ accepted_orders_count }}</h1>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RECENT ORDERS -->
+
+    <div class="recent-orders">
+
+        <h2>Recent Orders</h2>
+
+        <table class="orders-table">
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for order in recent_orders %}
+
+                <tr>
+
+                    <td>
+                        #{{ order.order_number }}
+                    </td>
+
+                    <td>
+                        {{ order.first_name }} {{ order.last_name }}
+                    </td>
+
+                    <td>
+                        <span class="status-badge status-{{ order.status|lower }}">
+                            {{ order.status }}
+                        </span>
+                    </td>
+
+                    <td>
+                        ₹{{ order.order_total }}
+                    </td>
+
+                    <td>
+                        {{ order.created_at|date:"d M Y" }}
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="5">
+                        No recent orders found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock content %}

@@ -73,6 +73,30 @@ form input::placeholder {
   color: #999;
 }
 
+.form-messages {
+  max-width: 500px;
+  margin: 20px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.form-messages li {
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.form-messages .error {
+  background: #fde8e8;
+  color: #b42318;
+}
+
+.form-messages .success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   form {
@@ -83,6 +107,13 @@ form input::placeholder {
 </style>
 
 <h2>Seller Registration Form</h2>
+{% if messages %}
+<ul class="form-messages">
+  {% for message in messages %}
+  <li class="{{ message.tags }}">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
 <!-- templates/become_seller.html -->
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}

@@ -1,62 +1,535 @@
 {% extends "base.html" %}
-
 {% load static %}
 
-{% block title %}Seller List{% endblock title %}
-
-<link rel="stylesheet" href="{% static 'admin/seller/seller_list.css' %}">
+{% block title %}Seller Products{% endblock %}
 
 {% block content %}
-<h2>Vendor Management</h2>
 
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Owner</th>
-                <th>Phone</th>
-                <th>City</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+<style>
 
-        <tbody>
-            {% for p in seller_products %}
-            <tr>
-                <td>{{ p.id }}</td>
-                <td>{{ p.name }}</td>
-                <td>{{ p.price }}</td>
-                <td>{{ v.phone }}</td>
-                <td>{{ v.gst_number }}</td>
-                <td>{{ v.city }}</td>
+/* =========================================
+   GLOBAL
+========================================= */
 
-                <td>
-                    {% if p.status == 'approved' %}
-                        <span class="badge approved">Approved</span>
-                    {% elif p.status == 'pending' %}
-                        <span class="badge pending">Pending</span>
-                    {% else %}
-                        <span class="badge rejected">Rejected</span>
-                    {% endif %}
-                </td>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-                
+body{
+    background:#f1f5f9;
+    font-family:'Inter',sans-serif;
+    color:#0f172a;
+}
 
-                <td>
-                    <a href="{% url 'approve_product' p.id %}" class="btn btn-approve">Approve</a>
-                    <a href="{% url 'reject_product' p.id %}" class="btn btn-reject">Reject</a>
-                    <a href="{% url 'delete_product' p.id %}" 
-                       class="btn btn-delete"
-                       onclick="return confirm('Delete this vendor?')">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
+/* =========================================
+   PAGE WRAPPER
+========================================= */
 
-    </table>
+.product-page{
+    width:100%;
+    padding:30px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.product-header{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    border-radius:28px;
+    padding:35px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:25px;
+    margin-bottom:30px;
+    position:relative;
+    overflow:hidden;
+}
+
+.product-header::before{
+    content:'';
+    position:absolute;
+    width:280px;
+    height:280px;
+    background:rgba(255,255,255,.08);
+    border-radius:50%;
+    right:-80px;
+    top:-80px;
+}
+
+.product-header-left{
+    position:relative;
+    z-index:2;
+}
+
+.product-header-left h1{
+    font-size:38px;
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+.product-header-left p{
+    font-size:15px;
+    opacity:.9;
+}
+
+/* =========================================
+   STATS
+========================================= */
+
+.product-stats{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    position:relative;
+    z-index:2;
+}
+
+.stats-card{
+    background:rgba(255,255,255,.14);
+    backdrop-filter:blur(10px);
+    border-radius:18px;
+    padding:18px 22px;
+    min-width:160px;
+}
+
+.stats-card h2{
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.stats-card p{
+    font-size:13px;
+    opacity:.9;
+}
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.product-table-wrapper{
+    background:white;
+    border-radius:28px;
+    padding:28px;
+    box-shadow:0 10px 35px rgba(15,23,42,.06);
+    overflow-x:auto;
+}
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
+.table-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.table-top h2{
+    font-size:24px;
+    font-weight:700;
+}
+
+.search-bar{
+    width:320px;
+    max-width:100%;
+}
+
+.search-bar input{
+    width:100%;
+    height:48px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    padding:0 18px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    font-size:14px;
+}
+
+.search-bar input:focus{
+    border-color:#2563eb;
+    background:white;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.product-table{
+    width:100%;
+    min-width:1100px;
+    border-collapse:collapse;
+}
+
+.product-table thead{
+    background:#f8fafc;
+}
+
+.product-table th{
+    padding:18px 16px;
+    text-align:left;
+    font-size:13px;
+    color:#475569;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.product-table td{
+    padding:18px 16px;
+    border-top:1px solid #f1f5f9;
+    font-size:14px;
+    color:#334155;
+}
+
+.product-table tbody tr{
+    transition:.3s;
+}
+
+.product-table tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.badge{
+    padding:7px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+    text-transform:capitalize;
+}
+
+.badge.approved{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.badge.pending{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.badge.rejected{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.action-group{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:9px 14px;
+    border-radius:10px;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-approve{
+    background:#16a34a;
+    color:white;
+}
+
+.btn-approve:hover{
+    background:#15803d;
+    transform:translateY(-2px);
+}
+
+.btn-reject{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-reject:hover{
+    background:#b91c1c;
+    transform:translateY(-2px);
+}
+
+.btn-delete{
+    background:#334155;
+    color:white;
+}
+
+.btn-delete:hover{
+    background:#0f172a;
+    transform:translateY(-2px);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:992px){
+
+    .product-header{
+        padding:28px;
+    }
+
+    .product-header-left h1{
+        font-size:30px;
+    }
+
+    .product-stats{
+        width:100%;
+    }
+
+    .stats-card{
+        flex:1;
+    }
+}
+
+@media(max-width:768px){
+
+    .product-page{
+        padding:15px;
+    }
+
+    .product-header{
+        border-radius:22px;
+        padding:24px;
+    }
+
+    .product-header-left h1{
+        font-size:26px;
+    }
+
+    .product-stats{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .stats-card{
+        width:100%;
+    }
+
+    .product-table-wrapper{
+        padding:18px;
+        border-radius:20px;
+    }
+
+    .table-top{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .table-top h2{
+        font-size:20px;
+    }
+
+    .product-table{
+        min-width:950px;
+    }
+}
+
+@media(max-width:480px){
+
+    .product-header-left h1{
+        font-size:24px;
+    }
+
+    .stats-card h2{
+        font-size:24px;
+    }
+
+    .product-table th,
+    .product-table td{
+        padding:14px 10px;
+        font-size:12px;
+    }
+
+    .btn{
+        padding:8px 12px;
+        font-size:11px;
+    }
+}
+
+</style>
+
+
+
+<div class="product-page">
+
+    <!-- HEADER -->
+    <div class="product-header">
+
+        <div class="product-header-left">
+
+            <h1>Seller Products</h1>
+
+            <p>
+                Manage seller submitted products and approvals
+            </p>
+
+        </div>
+
+
+        <div class="product-stats">
+
+            <div class="stats-card">
+                <h2>{{ seller_products.count }}</h2>
+                <p>Total Products</p>
+            </div>
+
+            <div class="stats-card">
+                <h2>{{ pending_products }}</h2>
+                <p>Pending Products</p>
+            </div>
+
+            <div class="stats-card">
+                <h2>{{ approved_products }}</h2>
+                <p>Approved Products</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TABLE -->
+    <div class="product-table-wrapper">
+
+        <div class="table-top">
+
+            <h2>All Products</h2>
+
+        </div>
+
+
+
+        <table class="product-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Shop Name</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for p in seller_products %}
+                    {% for v in vendors %}
+                <tr>
+
+                    <td>#{{ p.id }}</td>
+
+                    <td>{{ p.name }}</td>
+
+                    <td>₹{{ p.price }}</td>
+
+                    <td>{{v.shop_name}}</td>
+
+                    <td>{{v.owner_name}}</td>
+
+                    <td>
+
+                        {% if p.status == 'approved' %}
+
+                            <span class="badge approved">
+                                Approved
+                            </span>
+
+                        {% elif p.status == 'pending' %}
+
+                            <span class="badge pending">
+                                Pending
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge rejected">
+                                Rejected
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <div class="action-group">
+
+                            <a href="{% url 'approve_product' p.id %}"
+                               class="btn btn-approve">
+
+                                Approve
+
+                            </a>
+
+                            <a href="{% url 'reject_product' p.id %}"
+                               class="btn btn-reject">
+
+                                Reject
+
+                            </a>
+
+                            <a href="{% url 'delete_product' p.id %}"
+                               class="btn btn-delete"
+                               onclick="return confirm('Delete this product?')">
+
+                                Delete
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5"
+                        style="text-align:center;padding:40px;">
+
+                        No products found
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+                {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
 
-{% endblock content %}
+{% endblock %}
