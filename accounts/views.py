@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm
+from django.contrib.auth import update_session_auth_hash
+from .forms import (
+    RegistrationForm,
+    AccountProfileForm,
+    UserProfileForm,
+    ChangePasswordForm,
+)
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .models import Account
+from .models import Account, UserProfile
 from cart.views import merge_cart
 
 #VERIFICATION EMAIL
@@ -79,9 +85,62 @@ def logout(request):
     messages.success(request, 'Logout successfull. Please Login')
     return redirect('login')
 
-@login_required(login_url = 'login')
+@login_required(login_url='login')
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
+
+
+def _get_profile(user):
+    profile, _ = UserProfile.objects.get_or_create(user=user)
+    return profile
+
+
+@login_required(login_url='login')
+def user_profile(request):
+    profile = _get_profile(request.user)
+    return render(request, 'accounts/profile.html', {'profile': profile})
+
+
+@login_required(login_url='login')
+def edit_profile(request):
+    profile = _get_profile(request.user)
+    if request.method == 'POST':
+        account_form = AccountProfileForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if account_form.is_valid() and profile_form.is_valid():
+            account_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile has been updated.')
+            return redirect('profile')
+    else:
+        account_form = AccountProfileForm(instance=request.user)
+        profile_form = UserProfileForm(instance=profile)
+    return render(
+        request,
+        'accounts/profile_edit.html',
+        {
+            'account_form': account_form,
+            'profile_form': profile_form,
+        },
+    )
+
+
+@login_required(login_url='login')
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            if not request.user.check_password(form.cleaned_data['old_password']):
+                form.add_error('old_password', 'Current password is incorrect.')
+            else:
+                request.user.set_password(form.cleaned_data['new_password'])
+                request.user.save()
+                update_session_auth_hash(request, request.user)
+                messages.success(request, 'Your password was changed successfully.')
+                return redirect('profile')
+    else:
+        form = ChangePasswordForm()
+    return render(request, 'accounts/profile_password.html', {'form': form})
 
 def activate(request, uidb64, token):
     try:

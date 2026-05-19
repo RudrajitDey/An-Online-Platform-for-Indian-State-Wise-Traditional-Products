@@ -1,0 +1,626 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Indian Traditional Shop{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v=4.1">
+
+    <script src="https://www.paypal.com/sdk/js?client-id=Ac0Od556aUEX1pzwe6NeS4bjMBlJlQ4AJfOpyTXXFM4_k4wCFJqTEbEX3WRmPLg9xmHW2Fdcdr8c58BJ&currency=USD"></script>
+    
+</head>
+<body>
+<nav class="navbar">
+
+  <div class="top-navbar">
+
+   <!-- LEFT -->
+    <div class="nav-left">
+      <i class="fa fa-bars toggle-btn"></i>
+      <img src="{% static 'images/logop.png' %}" alt="logo">
+    </div>
+
+
+  <!-- SEARCH BAR -->
+  <form action="{% url 'search' %}" method="GET">
+  <div class="nav-center">
+    <div class="search-box">
+      <input  type="text" 
+          name="q" 
+          value="{{ request.GET.q }}" 
+          placeholder="Search medicines, brands, categories..."
+          autocomplete="off">
+
+      <select>
+        <option>All Categories</option>
+        {% for s in states %}
+        <option>{{s.name}}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+     
+    </div>
+  </div> </form>
+
+  <!-- RIGHT SIDE -->
+  <div class="nav-right">
+    
+    <div class="contact">
+      <span>For more information contact</span>
+      <p>+91-7908264763</p>
+    </div>
+
+    <a href="{% url 'cart' %}">
+    <div class="icons">
+     <i class="fa fa-shopping-cart"></i>
+      {% if cart_count > 0 %}
+      <span class="cart-count">{{cart_count}}</span>
+      {% endif %}
+    </div></a>
+
+    {% if not user.is_authenticated %}
+    <div class="user">
+      <p>Hello,</p>
+      <a href="{% url 'login' %}">Login/Register</a>
+    </div>
+    {% else %}
+    <div class="user user-nav-auth">
+      <a href="{% url 'dashboard' %}" class="nav-dashboard-link">Dashboard</a>
+      <a href="{% url 'profile' %}" class="nav-profile-avatar-wrap" title="My profile" aria-label="My profile">
+        {% if nav_profile_avatar %}
+        <img src="{{ nav_profile_avatar }}" alt="" class="nav-profile-avatar" width="40" height="40">
+        {% else %}
+        <span class="nav-profile-avatar nav-profile-avatar-placeholder" aria-hidden="true"><i class="fa fa-user"></i></span>
+        {% endif %}
+      </a>
+      <a href="{% url 'logout' %}" class="nav-logout-link">Logout</a>
+    </div>
+    {% endif %}
+
+
+  </div>
+
+</div>
+</nav>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar" id="sidebar">
+  <i class="fa fa-times close-btn" id="closeBtn"></i>
+
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Furniture</a></li>
+    <li><a href="#">Decor</a></li>
+    <li><a href="#">Cart</a></li>
+    <li><a href="#">Login</a></li>
+  </ul>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- ===== JS ===== -->
+<script>
+const toggleBtn = document.querySelector(".toggle-btn");
+const sidebar = document.getElementById("sidebar");
+const closeBtn = document.getElementById("closeBtn");
+const overlay = document.getElementById("overlay");
+
+toggleBtn.addEventListener("click", () => {
+  sidebar.classList.add("active");
+  overlay.classList.add("active");
+});
+
+closeBtn.addEventListener("click", () => {
+  sidebar.classList.remove("active");
+  overlay.classList.remove("active");
+});
+
+overlay.addEventListener("click", () => {
+  sidebar.classList.remove("active");
+  overlay.classList.remove("active");
+});
+</script>
+
+{% block content %}
+{% endblock content %}
+
+<footer class="premium-footer">
+
+    <!-- TOP SECTION -->
+
+    <div class="premium-footer-top">
+
+        <div class="premium-footer-brand">
+
+            <img src="{% static 'images/logop.png' %}" alt="logo">
+
+            <div>
+
+                <h2>PlatinumRX</h2>
+
+                <p>RUDRAJIT PRIVATE LIMITED</p>
+
+            </div>
+
+        </div>
+
+        <!-- SOCIAL MEDIA -->
+
+        <div class="premium-social-icons">
+
+            <a href="#">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <a href="#">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <a href="#">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+
+            <a href="#">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+
+            <a href="#">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER LINKS -->
+
+    <div class="premium-footer-grid">
+
+        <!-- COLUMN -->
+
+        <div class="premium-footer-column">
+
+            <h3>Know Us</h3>
+
+            <ul>
+
+                <li><a href="{% url 'become_seller' %}">Start Selling</a></li>
+
+                <li><a href="#">How to Buy Medicines</a></li>
+
+                <li><a href="#">Terms & Conditions</a></li>
+
+                <li><a href="#">Privacy Policy</a></li>
+
+                <li><a href="#">Editorial Policy</a></li>
+
+                <li><a href="#">Contact Us</a></li>
+
+                <li><a href="#">FAQ</a></li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- COLUMN -->
+
+        <div class="premium-footer-column">
+
+            <h3>Health Resources</h3>
+
+            <ul>
+
+                <li><a href="#">All Blogs</a></li>
+
+                <li><a href="#">All Salts</a></li>
+
+                <li><a href="#">All Diseases</a></li>
+
+                <li><a href="#">All Brands</a></li>
+
+                <li><a href="#">All Medicines</a></li>
+
+                <li><a href="#">Health Products</a></li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- COLUMN -->
+
+        <div class="premium-footer-column">
+
+            <h3>Customer Support</h3>
+
+            <ul>
+
+                <li><a href="#">Track Order</a></li>
+
+                <li><a href="#">Return Policy</a></li>
+
+                <li><a href="#">Shipping Info</a></li>
+
+                <li><a href="#">Payment Methods</a></li>
+
+                <li><a href="#">Help Center</a></li>
+
+                <li><a href="#">24x7 Support</a></li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- COLUMN -->
+
+        <div class="premium-footer-column">
+
+            <h3>Popular Categories</h3>
+
+            <ul>
+
+                <li><a href="#">Diabetes Care</a></li>
+
+                <li><a href="#">Heart Care</a></li>
+
+                <li><a href="#">Skin Care</a></li>
+
+                <li><a href="#">Baby Care</a></li>
+
+                <li><a href="#">Ayurvedic</a></li>
+
+                <li><a href="#">Healthcare Devices</a></li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+
+    <div class="premium-footer-bottom">
+
+        <p>
+            © 2026 PlatinumRX. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+<style>
+    /* ========================= */
+/* PREMIUM FOOTER */
+/* ========================= */
+
+footer{
+    height: auto;
+}
+
+.premium-footer{
+
+    width:100%;
+
+    background:linear-gradient(to right,#ffffff,#f8fafc);
+
+    border-top:1px solid #e5e7eb;
+
+    margin-top:70px;
+}
+
+
+/* ========================= */
+/* TOP SECTION */
+/* ========================= */
+
+.premium-footer-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:30px;
+
+    padding:45px 0 35px;
+
+    margin-left: 400px;
+
+    margin-right:50px;
+
+    border-bottom:1px solid #ececec;
+}
+
+
+/* ========================= */
+/* BRAND */
+/* ========================= */
+
+.premium-footer-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+}
+
+.premium-footer-brand img{
+
+    width:72px;
+
+    height:72px;
+
+    object-fit:contain;
+
+    border-radius:18px;
+
+    background:#fff;
+
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+
+    padding:8px;
+}
+
+.premium-footer-brand h2{
+
+    font-size:36px;
+
+    color:#111827;
+
+    font-weight:800;
+
+    margin-bottom:4px;
+}
+
+.premium-footer-brand p{
+
+    color:#6b7280;
+
+    font-size:15px;
+
+    letter-spacing:1px;
+}
+
+
+/* ========================= */
+/* SOCIAL ICONS */
+/* ========================= */
+
+.premium-social-icons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+}
+
+.premium-social-icons a{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    background:#ffffff;
+
+    color:#111827;
+
+    font-size:18px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+
+    transition:0.3s;
+}
+
+.premium-social-icons a:hover{
+
+    transform:translateY(-4px);
+
+    background:#111827;
+
+    color:#fff;
+}
+
+
+/* ========================= */
+/* GRID */
+/* ========================= */
+
+.premium-footer-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:50px;
+
+    padding:50px 0;
+
+    margin-left:150px;
+
+    margin-right:50px;
+}
+
+
+/* ========================= */
+/* COLUMN */
+/* ========================= */
+
+.premium-footer-column h3{
+
+    color:#111827;
+
+    font-size:20px;
+
+    margin-bottom:24px;
+
+    font-weight:700;
+
+    position:relative;
+}
+
+.premium-footer-column h3::after{
+
+    content:"";
+
+    width:45px;
+
+    height:3px;
+
+    background:#111827;
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    border-radius:20px;
+}
+
+.premium-footer-column ul{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+}
+
+.premium-footer-column ul li{
+
+    margin-bottom:15px;
+}
+
+.premium-footer-column ul li a{
+
+    text-decoration:none;
+
+    color:#6b7280;
+
+    font-size:15px;
+
+    transition:0.3s;
+}
+
+.premium-footer-column ul li a:hover{
+
+    color:#111827;
+
+    padding-left:5px;
+}
+
+
+/* ========================= */
+/* BOTTOM */
+/* ========================= */
+
+.premium-footer-bottom{
+
+    text-align:center;
+
+    padding:22px;
+
+    border-top:1px solid #ececec;
+
+    color:#6b7280;
+
+    font-size:14px;
+}
+
+
+/* ========================= */
+/* TABLET */
+/* ========================= */
+
+@media(max-width:1100px){
+
+    .premium-footer-top{
+
+        margin-left:50px;
+
+        margin-right:30px;
+    }
+
+    .premium-footer-grid{
+
+        margin-left:50px;
+
+        margin-right:30px;
+
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media(max-width:768px){
+
+    .premium-footer-top{
+
+        margin:0 20px;
+
+        padding:35px 0 25px;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .premium-footer-brand h2{
+
+        font-size:28px;
+    }
+
+    .premium-footer-grid{
+
+        margin:0 20px;
+
+        grid-template-columns:1fr;
+
+        gap:35px;
+
+        padding:35px 0;
+    }
+
+    .premium-social-icons{
+
+        gap:10px;
+    }
+
+    .premium-social-icons a{
+
+        width:42px;
+
+        height:42px;
+    }
+}
+</style>

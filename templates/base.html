@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indian Traditional Shop</title>
+    <title>{% block title %}Indian Traditional Shop{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'home.css' %}?v=4.0">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v=4.1">
     <link rel="stylesheet" href="{% static 'admin/admin_dashboard.css' %}?v=5.0">
     
     <link rel="stylesheet" href="{% static 'search/search_results.css' %}?v=2.0">
@@ -70,14 +70,22 @@
       {% endif %}
     </div></a>
 
-    {% if user.id is none %}
+    {% if not user.is_authenticated %}
     <div class="user">
       <p>Hello,</p>
       <a href="{% url 'login' %}">Login/Register</a>
     </div>
     {% else %}
-    <div class="user">
-      <a href="{% url 'logout' %}">Logout</a>
+    <div class="user user-nav-auth">
+      <a href="{% url 'dashboard' %}" class="nav-dashboard-link">Dashboard</a>
+      <a href="{% url 'profile' %}" class="nav-profile-avatar-wrap" title="My profile" aria-label="My profile">
+        {% if nav_profile_avatar %}
+        <img src="{{ nav_profile_avatar }}" alt="" class="nav-profile-avatar" width="40" height="40">
+        {% else %}
+        <span class="nav-profile-avatar nav-profile-avatar-placeholder" aria-hidden="true"><i class="fa fa-user"></i></span>
+        {% endif %}
+      </a>
+      <a href="{% url 'logout' %}" class="nav-logout-link">Logout</a>
     </div>
     {% endif %}
 

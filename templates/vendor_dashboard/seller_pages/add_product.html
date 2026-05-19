@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "footer_base.html" %}
 
 {% block title %}Seller Add Product{% endblock title %}
 
@@ -92,9 +92,38 @@
         <label>Description</label>
         <textarea name="description" placeholder="Enter description"></textarea>
 
-        <!-- Category -->
-        <label>Category</label>
-        <input type="text" name="category" placeholder="Enter category">
+        <div class="input-group">
+
+    <label>Select State</label>
+
+    <select name="state" id="stateSelect" required>
+
+        <option value="">Choose State</option>
+
+        {% for state in states %}
+
+            <option value="{{ state.id }}">
+                {{ state.name }}
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+</div>
+
+
+<div class="input-group">
+
+    <label>Select Category</label>
+
+    <select name="category" id="categorySelect" required>
+
+        <option value="">Choose Category</option>
+
+    </select>
+
+</div>
 
         <!-- Brand -->
         <label>Brand</label>
@@ -128,34 +157,6 @@
         </select>
 
 
-        <hr>
-<h3>Medicine Details</h3>
-
-<div id="content-wrapper">
-
-    <div class="content-block">
-        <label>Section Type</label>
-        <select name="section_type[]">
-            <option value="uses">Uses</option>
-            <option value="dosage">Dosage</option>
-            <option value="side_effects">Side Effects</option>
-            <option value="warnings">Warnings</option>
-            <option value="precautions">Precautions</option>
-            <option value="interactions">Interactions</option>
-            <option value="storage">Storage</option>
-            <option value="quick_tips">Quick Tips</option>
-        </select>
-
-        <label>Title</label>
-        <input type="text" name="section_title[]" placeholder="Optional title">
-
-        <label>Content (One point per line)</label>
-        <textarea name="section_content[]" placeholder="Enter details"></textarea>
-    </div>
-
-</div>
-
-<button type="button" onclick="addMore()">+ Add More Section</button>
 
 
         <button id="mybtn" type="submit">Add Product</button>
@@ -164,31 +165,62 @@
 
 
 <script>
-function addMore() {
-    let html = `
-    <div class="content-block" style="margin-top:15px;">
-        <label>Section Type</label>
-        <select name="section_type[]">
-            <option value="uses">Uses</option>
-            <option value="dosage">Dosage</option>
-            <option value="side_effects">Side Effects</option>
-            <option value="warnings">Warnings</option>
-            <option value="precautions">Precautions</option>
-            <option value="interactions">Interactions</option>
-            <option value="storage">Storage</option>
-            <option value="quick_tips">Quick Tips</option>
-        </select>
 
-        <label>Title</label>
-        <input type="text" name="section_title[]">
 
-        <label>Content</label>
-        <textarea name="section_content[]"></textarea>
-    </div>
-    `;
+const categoryData = {
 
-    document.getElementById('content-wrapper').insertAdjacentHTML('beforeend', html);
-}
+    {% for state in states %}
+
+        "{{ state.id }}": [
+
+            {% for cat in state.categories.all %}
+
+                {
+                    id: "{{ cat.id }}",
+                    name: "{{ cat.name }}"
+                },
+
+            {% endfor %}
+
+        ],
+
+    {% endfor %}
+};
+
+
+const stateSelect =
+    document.getElementById('stateSelect');
+
+const categorySelect =
+    document.getElementById('categorySelect');
+
+
+stateSelect.addEventListener('change', function () {
+
+    const stateId = this.value;
+
+    categorySelect.innerHTML =
+        '<option value="">Choose Category</option>';
+
+    if (categoryData[stateId]) {
+
+        categoryData[stateId].forEach(function(category) {
+
+            let option =
+                document.createElement('option');
+
+            option.value = category.id;
+
+            option.textContent = category.name;
+
+            categorySelect.appendChild(option);
+
+        });
+
+    }
+
+});
+
 </script>
 
 </body>

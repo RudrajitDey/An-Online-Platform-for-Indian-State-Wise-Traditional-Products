@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "footer_base.html" %}
 
 {% load static %}
 
@@ -11,59 +11,577 @@
 
 {% block content %}
 
-<p class="result-count">
-  {{ total_results }} products found
+<p class="market-result-count">
+
+    {{ total_results }} products found
+
 </p>
 
+
 {% if results %}
-<div class="product-grid">
+
+<div class="market-search-grid">
 
     {% for product in results %}
-    <div class="product-card">
+
+    <div class="market-search-card">
 
         <!-- IMAGE -->
-        <div class="product-img">
-            <img src="
+
+        <div class="market-search-image">
+
+            <a href="{% url 'product_detail' product.slug %}">
+
+                <img src="
                 {% if product.image %}
                     {{ product.image.url }}
                 {% else %}
                     /static/images/default.png
                 {% endif %}
-            " alt="{{ product.name }}">
+                "
+                alt="{{ product.name }}">
+
+            </a>
+
         </div>
 
-        <!-- DETAILS -->
-        <div class="product-info">
 
-            <h4 class="product-name">
-                {{ product.name }}
-            </h4>
+        <!-- CONTENT -->
 
-            <p class="product-price">
-                ₹{{ product.price }}
+        <div class="market-search-content">
+
+            <!-- BRAND -->
+
+            {% if product.brand %}
+
+            <p class="market-search-brand">
+
+                {{ product.brand }}
+
             </p>
 
+            {% endif %}
+
+
+            <!-- NAME -->
+
+            <a href="{% url 'product_detail' product.slug %}"
+               class="market-search-link">
+
+                <h4 class="market-search-title">
+
+                    {{ product.name }}
+
+                </h4>
+
+            </a>
+
+
+            <!-- VENDOR -->
+
+            {% if product.vendor %}
+
+            <div class="market-search-vendor">
+
+                Sold by :
+                <span>
+
+                    {{ product.vendor.shop_name }}
+
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- PRICE -->
+
+            <div class="market-search-price-box">
+
+                <span class="market-search-price">
+
+                    ₹{{ product.price }}
+
+                </span>
+
+                {% if product.discount_price %}
+
+                <span class="market-search-old-price">
+
+                    ₹{{ product.discount_price }}
+
+                </span>
+
+                {% endif %}
+
+            </div>
+
+
             <!-- BUTTON -->
-            <a href="{% url 'product_detail' product.slug %}" class="view-btn">
+
+            <a href="{% url 'product_detail' product.slug %}"
+               class="market-search-btn">
+
                 View Details
+
             </a>
 
         </div>
 
     </div>
+
     {% endfor %}
 
 </div>
 
 {% else %}
 
-<!-- EMPTY RESULT DESIGN -->
-<div class="no-results">
-    <img src="https://cdn-icons-png.flaticon.com/512/7486/7486740.png" alt="">
-    <h3>No results found 😕</h3>
-    <p>Try searching with different keywords</p>
+
+<!-- EMPTY RESULT -->
+
+<div class="market-empty-box">
+
+    <img src="https://cdn-icons-png.flaticon.com/512/7486/7486740.png"
+         alt="No Results">
+
+    <h3>
+
+        No results found 😕
+
+    </h3>
+
+    <p>
+
+        Try searching with different keywords
+
+    </p>
+
 </div>
 
+
 {% endif %}
+
+<style>
+    .market-result-count{
+
+    width:95%;
+
+    max-width:1400px;
+
+    margin:30px auto 10px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#475569;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.market-search-grid{
+
+    width:95%;
+
+    max-width:1400px;
+
+    margin:20px auto 50px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:28px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.market-search-card{
+
+    background:#ffffff;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    border:1px solid #edf0f7;
+
+    transition:0.35s ease;
+
+    box-shadow:
+    0 6px 20px rgba(15,23,42,0.05);
+}
+
+.market-search-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 20px 40px rgba(15,23,42,0.10);
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.market-search-image{
+
+    width:100%;
+
+    height:250px;
+
+    background:#f8fafc;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:24px;
+
+    overflow:hidden;
+}
+
+.market-search-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    transition:0.4s ease;
+}
+
+.market-search-card:hover .market-search-image img{
+
+    transform:scale(1.08);
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.market-search-content{
+
+    padding:22px 20px 24px;
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.market-search-brand{
+
+    font-size:12px;
+
+    font-weight:700;
+
+    color:#2563eb;
+
+    text-transform:uppercase;
+
+    margin-bottom:10px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.market-search-link{
+
+    text-decoration:none;
+}
+
+.market-search-title{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    line-height:1.5;
+
+    margin-bottom:14px;
+
+    min-height:58px;
+}
+
+
+/* =========================
+   VENDOR
+========================= */
+
+.market-search-vendor{
+
+    font-size:14px;
+
+    color:#64748b;
+
+    margin-bottom:18px;
+}
+
+.market-search-vendor span{
+
+    color:#111827;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.market-search-price-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:22px;
+}
+
+.market-search-price{
+
+    font-size:28px;
+
+    font-weight:800;
+
+    color:#111827;
+}
+
+.market-search-old-price{
+
+    font-size:16px;
+
+    color:#94a3b8;
+
+    text-decoration:line-through;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.market-search-btn{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#111827;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:0.35s ease;
+}
+
+.market-search-btn:hover{
+
+    background:#2563eb;
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================
+   EMPTY BOX
+========================= */
+
+.market-empty-box{
+
+    width:95%;
+
+    max-width:500px;
+
+    margin:60px auto;
+
+    background:#fff;
+
+    padding:50px 30px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,0.06);
+}
+
+.market-empty-box img{
+
+    width:130px;
+
+    margin-bottom:25px;
+}
+
+.market-empty-box h3{
+
+    font-size:30px;
+
+    color:#111827;
+
+    margin-bottom:12px;
+}
+
+.market-empty-box p{
+
+    color:#64748b;
+
+    font-size:16px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1100px){
+
+    .market-search-grid{
+
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .market-search-grid{
+
+        width:92%;
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:16px;
+    }
+
+    .market-search-card{
+
+        border-radius:20px;
+    }
+
+    .market-search-image{
+
+        height:170px;
+
+        padding:14px;
+    }
+
+    .market-search-content{
+
+        padding:16px 14px 18px;
+    }
+
+    .market-search-title{
+
+        font-size:15px;
+
+        min-height:auto;
+    }
+
+    .market-search-price{
+
+        font-size:20px;
+    }
+
+    .market-search-old-price{
+
+        font-size:13px;
+    }
+
+    .market-search-btn{
+
+        padding:12px;
+
+        font-size:13px;
+
+        border-radius:12px;
+    }
+
+    .market-search-vendor{
+
+        font-size:12px;
+    }
+
+    .market-empty-box{
+
+        padding:40px 20px;
+    }
+
+    .market-empty-box h3{
+
+        font-size:24px;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:430px){
+
+    .market-search-grid{
+
+        gap:12px;
+    }
+
+    .market-search-image{
+
+        height:140px;
+    }
+
+    .market-search-title{
+
+        font-size:13px;
+    }
+
+    .market-search-price{
+
+        font-size:18px;
+    }
+
+    .market-search-brand{
+
+        font-size:10px;
+    }
+}
+</style>
 
 {% endblock content%}

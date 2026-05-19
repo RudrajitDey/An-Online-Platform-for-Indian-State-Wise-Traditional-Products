@@ -1,5 +1,17 @@
 from cart.models import Cart, CartItem
 
+
+def _nav_profile_avatar_url(user):
+    if not user.is_authenticated:
+        return None
+    from accounts.models import UserProfile
+
+    profile = UserProfile.objects.only('avatar').filter(user=user).first()
+    if profile and profile.avatar:
+        return profile.avatar.url
+    return None
+
+
 def cart_count(request):
     """
     Context processor to provide cart count to all templates
@@ -25,5 +37,6 @@ def cart_count(request):
                 cart_count = 0
     
     return {
-        'cart_count': cart_count
+        'cart_count': cart_count,
+        'nav_profile_avatar': _nav_profile_avatar_url(request.user),
     }

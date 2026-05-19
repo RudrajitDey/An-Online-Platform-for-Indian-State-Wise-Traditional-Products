@@ -1,41 +1,551 @@
-{% extends "base.html" %}
+{% extends "footer_base.html" %}
 
 {% load static %}
 
-
 {% block title %}Products{% endblock title %}
 
-<link rel="stylesheet" href="{% static 'products/category_products.css' %}?v=3.0">
+<link rel="stylesheet"
+      href="{% static 'products/category_products.css' %}?v=5.0">
 
 {% block content %}
 
 
+<h2 class="market-heading">
 
-<h2 class="shop-title">{{ category.name }}</h2>
+    {{ category.name }}
 
-<div class="shop-grid">
+</h2>
+
+
+<div class="market-grid">
+
     {% for p in products %}
-    
-    <div class="shop-card">
-        <a href="{% url 'product_detail' p.slug %}" class="shop-link">
-        
-        <div class="shop-image-box">
-            <img src="{{ p.image.url }}" alt="{{ p.name }}">
-        </div>
 
-        <div class="shop-content">
-            <h4>{{ p.name }}</h4>
+    <div class="market-card">
 
-            <div class="shop-price">{{ p.price }}</div>
+        <!-- IMAGE -->
 
-            <a href="{% url 'add_to_cart' p.id 'product' %}">
-                <button class="shop-btn">Add to Cart</button>
+        <div class="market-image-wrapper">
+
+            <a href="{% url 'product_detail' p.slug %}">
+
+                <img src="{{ p.image.url }}"
+                     alt="{{ p.name }}">
+
             </a>
+
+            {% if p.discount_price %}
+
+            <span class="market-offer-badge">
+
+                Save ₹{{ p.discount_price }}
+
+            </span>
+
+            {% endif %}
+
         </div>
 
-        </a>
+
+        <!-- CONTENT -->
+
+        <div class="market-content">
+
+            <!-- BRAND -->
+
+            <p class="market-brand-name">
+
+                {{ p.brand }}
+
+            </p>
+
+
+            <!-- PRODUCT NAME -->
+
+            <a href="{% url 'product_detail' p.slug %}"
+               class="market-product-link">
+
+                <h4 class="market-product-title">
+
+                    {{ p.name }}
+
+                </h4>
+
+            </a>
+
+
+            <!-- VENDOR -->
+
+            <div class="market-vendor">
+
+                Sold by :
+
+                <span>
+
+                    {{ p.brand }}
+
+                </span>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="market-price-box">
+
+                <span class="market-current-price">
+
+                    ₹{{ p.price }}
+
+                </span>
+
+                {% if p.discount_price %}
+
+                <span class="market-old-price">
+
+                    ₹{{ p.discount_price }}
+
+                </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <div class="market-button-area">
+
+                <a href="{% url 'add_to_cart' p.id 'product' %}"
+                   class="market-cart-btn">
+
+                    Add to Cart
+
+                </a>
+
+            </div>
+
+        </div>
+
     </div>
 
     {% endfor %}
+
 </div>
+
+<style>
+    /* =========================
+   PAGE
+========================= */
+
+.market-heading{
+
+    text-align:center;
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#111827;
+
+    margin:40px 0;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.market-grid{
+
+    width:95%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:28px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.market-card{
+
+    background:#ffffff;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    border:1px solid #edf0f7;
+
+    transition:0.35s ease;
+
+    box-shadow:
+    0 6px 20px rgba(15,23,42,0.05);
+}
+
+.market-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 20px 40px rgba(15,23,42,0.10);
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.market-image-wrapper{
+
+    width:100%;
+
+    height:260px;
+
+    background:#f8fafc;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:24px;
+
+    overflow:hidden;
+}
+
+.market-image-wrapper img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    transition:0.4s ease;
+}
+
+.market-card:hover .market-image-wrapper img{
+
+    transform:scale(1.08);
+}
+
+
+/* =========================
+   DISCOUNT BADGE
+========================= */
+
+.market-offer-badge{
+
+    position:absolute;
+
+    top:16px;
+
+    left:16px;
+
+    background:#dc2626;
+
+    color:#fff;
+
+    padding:7px 14px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.market-content{
+
+    padding:22px 20px 24px;
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.market-brand-name{
+
+    font-size:13px;
+
+    font-weight:700;
+
+    color:#2563eb;
+
+    margin-bottom:10px;
+
+    text-transform:uppercase;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.market-product-link{
+
+    text-decoration:none;
+}
+
+.market-product-title{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    line-height:1.5;
+
+    margin-bottom:14px;
+
+    min-height:58px;
+}
+
+
+/* =========================
+   VENDOR
+========================= */
+
+.market-vendor{
+
+    font-size:14px;
+
+    color:#64748b;
+
+    margin-bottom:18px;
+}
+
+.market-vendor span{
+
+    color:#111827;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.market-price-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:22px;
+}
+
+.market-current-price{
+
+    font-size:28px;
+
+    font-weight:800;
+
+    color:#111827;
+}
+
+.market-old-price{
+
+    font-size:16px;
+
+    color:#94a3b8;
+
+    text-decoration:line-through;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.market-button-area{
+
+    width:100%;
+}
+
+.market-cart-btn{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#111827;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:0.35s ease;
+}
+
+.market-cart-btn:hover{
+
+    background:#2563eb;
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1100px){
+
+    .market-grid{
+
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .market-heading{
+
+        font-size:30px;
+
+        margin:30px 0;
+    }
+
+    .market-grid{
+
+        width:92%;
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:16px;
+    }
+
+    .market-card{
+
+        border-radius:20px;
+    }
+
+    .market-image-wrapper{
+
+        height:170px;
+
+        padding:14px;
+    }
+
+    .market-content{
+
+        padding:16px 14px 18px;
+    }
+
+    .market-product-title{
+
+        font-size:15px;
+
+        min-height:auto;
+
+        margin-bottom:10px;
+    }
+
+    .market-current-price{
+
+        font-size:20px;
+    }
+
+    .market-old-price{
+
+        font-size:13px;
+    }
+
+    .market-cart-btn{
+
+        padding:12px;
+
+        font-size:13px;
+
+        border-radius:12px;
+    }
+
+    .market-offer-badge{
+
+        font-size:9px;
+
+        padding:5px 10px;
+    }
+
+    .market-vendor{
+
+        font-size:12px;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:430px){
+
+    .market-grid{
+
+        gap:12px;
+    }
+
+    .market-image-wrapper{
+
+        height:140px;
+    }
+
+    .market-product-title{
+
+        font-size:13px;
+    }
+
+    .market-current-price{
+
+        font-size:18px;
+    }
+
+    .market-brand-name{
+
+        font-size:10px;
+    }
+}
+</style>
+
 {% endblock %}

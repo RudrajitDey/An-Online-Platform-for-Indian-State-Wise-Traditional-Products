@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "footer_base.html" %}
 
 {% load static %}
 
@@ -10,64 +10,874 @@
 {% block content %}
 
 
-<div class="pd-container">
+<div class="product-detail-wrapper">
 
-    <!-- TOP SECTION -->
-    <div class="pd-top">
+    <!-- ========================= -->
+    <!-- PRODUCT SECTION -->
+    <!-- ========================= -->
 
-        <div class="pd-left">
-            <img src="{{ product.image.url }}" class="pd-img">
+    <div class="product-detail-container">
 
-            <h2>{{ product.name }}</h2>
-            <p>{{ product.brand }}</p>
+        <!-- LEFT IMAGE -->
 
-            <p class="pd-price">₹{{ product.price }}</p>
+        <div class="product-gallery">
 
-            <a href="{% url 'add_to_cart' product.id 'product' %}"><button class="pd-btn">Add to Cart</button></a>
+            <div class="main-product-image">
+
+                <img src="{{ product.image.url }}"
+                     alt="{{ product.name }}">
+
+            </div>
+
         </div>
 
-        <div class="pd-right">
-            <h4>Recommendation</h4>
-            <p>Similar product suggestion</p>
+
+        <!-- RIGHT CONTENT -->
+
+        <div class="product-information">
+
+            <!-- CATEGORY -->
+
+            <span class="product-category-badge">
+
+                {{ product.category.name }}
+
+            </span>
+
+
+            <!-- PRODUCT NAME -->
+
+            <h1 class="product-main-title">
+
+                {{ product.name }}
+
+            </h1>
+
+
+            <!-- BRAND -->
+
+            <div class="product-brand-name">
+
+                Brand :
+                <span>{{ product.brand }}</span>
+
+            </div>
+
+
+            <!-- VENDOR -->
+
+            <div class="product-vendor-name">
+
+                Sold by :
+                <span>{{ product.vendor.shop_name }}</span>
+
+            </div>
+
+
+            <!-- STATE -->
+
+            <div class="product-state-name">
+
+                State :
+                <span>{{ product.state.name }}</span>
+
+            </div>
+
+
+            <!-- STOCK -->
+
+            <div class="product-stock-status">
+
+                {% if product.stock > 0 %}
+
+                    <span class="in-stock">
+
+                        In Stock ({{ product.stock }} Available)
+
+                    </span>
+
+                {% else %}
+
+                    <span class="out-stock">
+
+                        Out of Stock
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="product-price-section">
+
+                <span class="main-price">
+
+                    ₹{{ product.price }}
+
+                </span>
+
+                {% if product.discount_price %}
+
+                <span class="old-price">
+
+                    ₹{{ product.discount_price }}
+
+                </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="product-description">
+
+                <h3>Description</h3>
+
+                <p>
+
+                    {{ product.description }}
+
+                </p>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="product-action-buttons">
+
+                <a href="{% url 'add_to_cart' product.id 'product' %}"
+                   class="add-cart-btn">
+
+                    Add to Cart
+
+                </a>
+
+                <a href="#related-products"
+                   class="buy-now-btn">
+
+                    Explore More
+
+                </a>
+
+            </div>
+
         </div>
 
     </div>
 
+
+    <!-- ========================= -->
     <!-- RELATED PRODUCTS -->
-    <h3>Customers also bought</h3>
-    <div class="pd-related">
-        {% for p in related_products %}
-        <div class="pd-card">
-            <img src="{{ p.image.url }}">
-            <p>{{ p.name }}</p>
-            <p>₹{{ p.price}}</p>
-            <button class="pd-btn">Add</button>
+    <!-- ========================= -->
+
+    <div class="related-products-section"
+         id="related-products">
+
+        <div class="section-heading">
+
+            <h2>
+
+                Related Products
+
+            </h2>
+
+            <p>
+
+                Customers also viewed these traditional products
+
+            </p>
+
         </div>
-        {% endfor %}
-    </div>
 
-    <!-- TABS -->
-    <div class="pd-tabs">
-        {% for section in product.contents.all %}
-            <div class="pd-tab">{{ section.get_section_type_display }}</div>
-        {% endfor %}
-    </div>
 
-    <!-- CONTENT -->
-    <div class="pd-tab-content">
-        {% for section in product.contents.all %}
-        <div class="pd-section">
-            <h3>{{ section.get_section_type_display }}</h3>
+        <div class="related-products-grid">
 
-            <ul>
-                {% for p in section.points.all %}
-                    <li>{{ p.text }}</li>
-                {% endfor %}
-            </ul>
+            {% for p in related_products %}
+
+            <div class="related-product-card">
+
+                <a href="{% url 'product_detail' p.slug %}"
+                   class="related-product-link">
+
+                    <div class="related-image-box">
+
+                        <img src="{{ p.image.url }}"
+                             alt="{{ p.name }}">
+
+                    </div>
+
+                    <div class="related-product-content">
+
+                        <p class="related-brand">
+
+                            {{ p.brand }}
+
+                        </p>
+
+                        <h4>
+
+                            {{ p.name }}
+
+                        </h4>
+
+                        <div class="related-price">
+
+                            ₹{{ p.price }}
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
         </div>
-        {% endfor %}
+
     </div>
 
 </div>
+
+
+<style>
+    /* =========================
+   PAGE
+========================= */
+
+.product-detail-wrapper{
+
+    width:100%;
+
+    background:#f8fafc;
+
+    padding:40px 0 60px;
+}
+
+
+/* =========================
+   TOP CONTAINER
+========================= */
+
+.product-detail-container{
+
+    width:95%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:50px;
+
+    align-items:start;
+}
+
+
+/* =========================
+   IMAGE SECTION
+========================= */
+
+.product-gallery{
+
+    background:#ffffff;
+
+    border-radius:32px;
+
+    padding:30px;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,0.06);
+}
+
+.main-product-image{
+
+    width:100%;
+
+    height:520px;
+
+    background:#f8fafc;
+
+    border-radius:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+.main-product-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    transition:0.4s ease;
+}
+
+.main-product-image:hover img{
+
+    transform:scale(1.05);
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.product-information{
+
+    background:#ffffff;
+
+    border-radius:32px;
+
+    padding:40px;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,0.06);
+}
+
+
+/* =========================
+   BADGE
+========================= */
+
+.product-category-badge{
+
+    display:inline-block;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    margin-bottom:20px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.product-main-title{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#111827;
+
+    line-height:1.3;
+
+    margin-bottom:20px;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.product-brand-name,
+.product-vendor-name,
+.product-state-name{
+
+    font-size:16px;
+
+    color:#64748b;
+
+    margin-bottom:14px;
+}
+
+.product-brand-name span,
+.product-vendor-name span,
+.product-state-name span{
+
+    color:#111827;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   STOCK
+========================= */
+
+.product-stock-status{
+
+    margin:20px 0;
+}
+
+.in-stock{
+
+    background:#dcfce7;
+
+    color:#166534;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+.out-stock{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.product-price-section{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    margin:25px 0;
+}
+
+.main-price{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#111827;
+}
+
+.old-price{
+
+    font-size:22px;
+
+    color:#94a3b8;
+
+    text-decoration:line-through;
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.product-description{
+
+    margin-top:30px;
+}
+
+.product-description h3{
+
+    font-size:24px;
+
+    color:#111827;
+
+    margin-bottom:14px;
+}
+
+.product-description p{
+
+    font-size:16px;
+
+    line-height:1.9;
+
+    color:#475569;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.product-action-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-top:40px;
+}
+
+.add-cart-btn,
+.buy-now-btn{
+
+    flex:1;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    transition:0.35s ease;
+}
+
+.add-cart-btn{
+
+    background:#111827;
+
+    color:#fff;
+}
+
+.buy-now-btn{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+}
+
+.add-cart-btn:hover{
+
+    background:#2563eb;
+
+    transform:translateY(-3px);
+}
+
+.buy-now-btn:hover{
+
+    background:#dbeafe;
+
+    transform:translateY(-3px);
+}
+
+
+/* =========================
+   RELATED PRODUCTS
+========================= */
+
+.related-products-section{
+
+    width:95%;
+
+    max-width:1400px;
+
+    margin:70px auto 0;
+}
+
+.section-heading{
+
+    margin-bottom:30px;
+}
+
+.section-heading h2{
+
+    font-size:36px;
+
+    font-weight:800;
+
+    color:#111827;
+
+    margin-bottom:10px;
+}
+
+.section-heading p{
+
+    color:#64748b;
+
+    font-size:16px;
+}
+
+
+/* =========================
+   RELATED GRID
+========================= */
+
+.related-products-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:24px;
+}
+
+
+/* =========================
+   RELATED CARD
+========================= */
+
+.related-product-card{
+
+    background:#fff;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    border:1px solid #edf0f7;
+
+    transition:0.35s ease;
+
+    box-shadow:
+    0 6px 20px rgba(15,23,42,0.05);
+}
+
+.related-product-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 20px 40px rgba(15,23,42,0.10);
+}
+
+.related-product-link{
+
+    text-decoration:none;
+
+    color:inherit;
+}
+
+
+/* =========================
+   RELATED IMAGE
+========================= */
+
+.related-image-box{
+
+    width:100%;
+
+    height:220px;
+
+    background:#f8fafc;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.related-image-box img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+}
+
+
+/* =========================
+   RELATED CONTENT
+========================= */
+
+.related-product-content{
+
+    padding:18px;
+}
+
+.related-brand{
+
+    font-size:12px;
+
+    font-weight:700;
+
+    color:#2563eb;
+
+    margin-bottom:10px;
+}
+
+.related-product-content h4{
+
+    font-size:18px;
+
+    color:#111827;
+
+    line-height:1.5;
+
+    margin-bottom:14px;
+}
+
+.related-price{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    color:#111827;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1100px){
+
+    .product-detail-container{
+
+        grid-template-columns:1fr;
+    }
+
+    .related-products-grid{
+
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .product-detail-wrapper{
+
+        padding:20px 0 40px;
+    }
+
+    .product-detail-container{
+
+        width:92%;
+
+        gap:24px;
+    }
+
+    .product-gallery,
+    .product-information{
+
+        border-radius:22px;
+
+        padding:20px;
+    }
+
+    .main-product-image{
+
+        height:300px;
+
+        border-radius:18px;
+    }
+
+    .product-main-title{
+
+        font-size:28px;
+    }
+
+    .main-price{
+
+        font-size:30px;
+    }
+
+    .old-price{
+
+        font-size:18px;
+    }
+
+    .product-description p{
+
+        font-size:14px;
+    }
+
+    .product-action-buttons{
+
+        flex-direction:column;
+    }
+
+    .related-products-section{
+
+        width:92%;
+
+        margin-top:50px;
+    }
+
+    .section-heading h2{
+
+        font-size:28px;
+    }
+
+    .related-products-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:16px;
+    }
+
+    .related-image-box{
+
+        height:150px;
+    }
+
+    .related-product-content h4{
+
+        font-size:14px;
+    }
+
+    .related-price{
+
+        font-size:18px;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:430px){
+
+    .related-products-grid{
+
+        grid-template-columns:1fr 1fr;
+
+        gap:12px;
+    }
+
+    .main-product-image{
+
+        height:240px;
+    }
+
+    .product-main-title{
+
+        font-size:24px;
+    }
+}
+</style>
 {% endblock %}
 

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "footer_base.html" %}
 
 {% load static %}
 
@@ -59,60 +59,129 @@
 
 
 <div class="content-section">
-  <div class="title">
-    <p>Shop By Categories</p>
-    <p id="offer-tag">Save Upto 60% on your Medicines</p>
-  </div>
 
-  <!-- ✅ CATEGORY SECTION -->
-  <div class="categories-wrapper">
-  <div class="categories">
+    <!-- ========================= -->
+    <!-- TITLE -->
+    <!-- ========================= -->
 
-    {% for s in states %}
-    <div class="full-box" onclick="filterCategory('{{ s.id }}', this)">
-      <div class="box">
-        <img src="{{ s.image.url }}" alt="">
-      </div>
-      <p>{{ s.name }}</p>
+    <div class="title">
+
+        <h2>Shop By States</h2>
+
+        <p id="offer-tag">
+            Discover authentic traditional products from every corner of India.
+        </p>
+
     </div>
-    {% endfor %}
 
-    <!-- duplicate -->
-    {% for s in states %}
-    <div class="full-box" onclick="filterCategory('{{ s.id }}', this)">
-      <div class="box">
-        <img src="{{ s.image.url }}" alt="">
-      </div>
-      <p>{{ s.name }}</p>
-    </div>
-    {% endfor %}
 
-  </div>
-</div>
-  <!-- ✅ SUBCATEGORY CARDS (IMPORTANT CHANGE) -->
-  <div class="all-product">
+    <!-- ========================= -->
+    <!-- STATES -->
+    <!-- ========================= -->
 
-  {% for s in states %}
-    {% for cat in s.categories.all %}
+    <div class="categories-wrapper">
 
-       <a href="{% url 'category_products' cat.slug %}" class="category-link">
+        <div class="categories">
 
-        <div class="card-box" data-category="{{ cat.id }}">
+            <!-- ALL STATES -->
 
-            <div class="product-img">
-                <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
+            <div class="full-box active-box"
+                 onclick="filterCategory('all', this)">
+
+                <div class="box">
+
+                    <img src="{% static 'images/all.png' %}" alt="All">
+
+                </div>
+
+                <p>All</p>
+
             </div>
 
-            <div class="product-name">
-                <p>{{ cat.name }}</p>
+
+            {% for s in states %}
+
+            <div class="full-box"
+                 onclick="filterCategory('{{ s.id }}', this)">
+
+                <div class="box">
+
+                    <img src="{{ s.image.url }}" alt="{{ s.name }}">
+
+                </div>
+
+                <p>{{ s.name }}</p>
+
             </div>
+
+            {% endfor %}
+
+
+            {% for s in states %}
+
+            <div class="full-box"
+                 onclick="filterCategory('{{ s.id }}', this)">
+
+                <div class="box">
+
+                    <img src="{{ s.image.url }}" alt="{{ s.name }}">
+
+                </div>
+
+                <p>{{ s.name }}</p>
+
+            </div>
+
+            {% endfor %}
+
 
         </div>
 
-    </a>
+    </div>
 
-    {% endfor %}
-  {% endfor %}
+
+    <!-- ========================= -->
+    <!-- CATEGORY CARDS -->
+    <!-- ========================= -->
+
+    <div class="all-product">
+
+        {% for s in states %}
+            {% for cat in s.categories.all %}
+
+            <a href="{% url 'category_products' cat.slug %}"
+               class="category-link category-card"
+               data-state="{{ s.id }}">
+
+                <div class="card-box">
+
+                    <div class="product-img">
+
+                        <img src="{{ cat.image.url }}"
+                             alt="{{ cat.name }}">
+
+                    </div>
+
+                    <div class="product-name">
+
+                        <span class="state-badge">
+
+                            {{ s.name }}
+
+                        </span>
+
+                        <p>{{ cat.name }}</p>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+        {% endfor %}
+
+    </div>
 
 </div>
 <div class="full-faq">
@@ -178,6 +247,49 @@ function toggleFAQ(element) {
     });
 
     item.classList.toggle('active');
+}
+
+function filterCategory(stateId, element){
+
+    // ACTIVE BUTTON
+
+    let boxes = document.querySelectorAll('.full-box');
+
+    boxes.forEach(box => {
+
+        box.classList.remove('active-box');
+
+    });
+
+    element.classList.add('active-box');
+
+
+    // FILTER PRODUCTS
+
+    let cards = document.querySelectorAll('.category-card');
+
+    cards.forEach(card => {
+
+        if(stateId === 'all'){
+
+            card.style.display = 'block';
+        }
+
+        else{
+
+            if(card.getAttribute('data-state') === stateId){
+
+                card.style.display = 'block';
+            }
+
+            else{
+
+                card.style.display = 'none';
+            }
+        }
+
+    });
+
 }
 </script>
 {% endblock content %}

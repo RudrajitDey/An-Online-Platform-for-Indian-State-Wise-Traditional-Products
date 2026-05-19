@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "footer_base.html" %}
 {% load static %}
 
 {% block title %}Admin Dashboard{% endblock %}
@@ -118,12 +118,16 @@ body{
 }
 
 .admin-profile h4{
+    display: flex;
+    justify-content: center;
     color:#0f172a;
     font-size:17px;
     margin-bottom:6px;
 }
 
 .admin-profile p{
+    display: flex;
+    justify-content: center;
     color:#64748b;
     font-size:14px;
 }
@@ -529,8 +533,8 @@ body{
             </div>
 
             <div class="admin-profile">
-                <h4>{{ user.username }}</h4>
-                <p>{{ user.email }}</p>
+                <h4>Admin Dashboard</h4>
+                <p>{{ user.username }}</p>
             </div>
 
         </div>
@@ -539,12 +543,6 @@ body{
 
             <ul>
 
-                <li>
-                    <a href="#" class="current">
-                        <span class="menu-icon">📊</span>
-                        Dashboard
-                    </a>
-                </li>
 
                 <li>
                     <a href="{% url 'seller_list' %}">
@@ -577,7 +575,7 @@ body{
                 <li>
                     <a href="">
                         <span class="menu-icon">⚙️</span>
-                        Settings
+                        Logout
                     </a>
                 </li>
 
@@ -601,7 +599,7 @@ body{
             </div>
 
             <div class="admin-role">
-                🔐 Super Admin
+                {{user.email}}
             </div>
 
         </div>

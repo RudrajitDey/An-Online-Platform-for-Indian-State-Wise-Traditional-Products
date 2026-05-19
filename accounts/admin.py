@@ -1,6 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Account
+from .models import Account, UserProfile
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'city', 'state', 'country', 'updated_at')
+    list_select_related = ('user',)
+    search_fields = ('user__email', 'user__username', 'city', 'pincode')
+    raw_id_fields = ('user',)
+
 
 # Register your models here.
 

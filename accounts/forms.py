@@ -1,5 +1,7 @@
 from django import forms
-from .models import Account
+from django.core.exceptions import ValidationError
+
+from .models import Account, UserProfile
 import re
 
 
@@ -47,3 +49,95 @@ class RegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match")
 
         return cleaned_data
+
+
+def _validate_strong_password(password):
+    if len(password) < 8:
+        raise ValidationError('Password must be at least 8 characters')
+    if not re.search(r'[A-Z]', password):
+        raise ValidationError('Password must contain at least one uppercase letter')
+    if not re.search(r'[a-z]', password):
+        raise ValidationError('Password must contain at least one lowercase letter')
+    if not re.search(r'[0-9]', password):
+        raise ValidationError('Password must contain at least one number')
+    if not re.search(r'[!@#$%^&*(),.?\":{}|<>]', password):
+        raise ValidationError('Password must contain at least one special character')
+
+
+class AccountProfileForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['first_name', 'last_name', 'username', 'phone_number']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'account-input'}),
+            'last_name': forms.TextInput(attrs={'class': 'account-input'}),
+            'username': forms.TextInput(attrs={'class': 'account-input'}),
+            'phone_number': forms.TextInput(attrs={'class': 'account-input'}),
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data['username'].strip()
+        qs = Account.objects.filter(username__iexact=username)
+        if self.instance and self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise ValidationError('This username is already taken.')
+        return username
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'avatar',
+            'bio',
+            'date_of_birth',
+            'gender',
+            'address_line1',
+            'address_line2',
+            'city',
+            'state',
+            'country',
+            'pincode',
+        ]
+        widgets = {
+            'avatar': forms.FileInput(attrs={'class': 'account-input-file', 'accept': 'image/*'}),
+            'bio': forms.Textarea(attrs={'rows': 4, 'class': 'account-input'}),
+            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'class': 'account-input'}),
+            'gender': forms.Select(attrs={'class': 'account-input'}),
+            'address_line1': forms.TextInput(attrs={'class': 'account-input'}),
+            'address_line2': forms.TextInput(attrs={'class': 'account-input'}),
+            'city': forms.TextInput(attrs={'class': 'account-input'}),
+            'state': forms.TextInput(attrs={'class': 'account-input'}),
+            'country': forms.TextInput(attrs={'class': 'account-input'}),
+            'pincode': forms.TextInput(attrs={'class': 'account-input'}),
+        }
+
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(
+        label='Current password',
+        widget=forms.PasswordInput(attrs={'class': 'account-input', 'autocomplete': 'current-password'}),
+    )
+    new_password = forms.CharField(
+        label='New password',
+        widget=forms.PasswordInput(attrs={'class': 'account-input', 'autocomplete': 'new-password'}),
+    )
+    confirm_password = forms.CharField(
+        label='Confirm new password',
+        widget=forms.PasswordInput(attrs={'class': 'account-input', 'autocomplete': 'new-password'}),
+    )
+
+    def clean_new_password(self):
+        pwd = self.cleaned_data.get('new_password')
+        if pwd:
+            _validate_strong_password(pwd)
+        return pwd
+
+    def clean(self):
+        data = super().clean()
+        new = data.get('new_password')
+        confirm = data.get('confirm_password')
+        if new and confirm and new != confirm:
+            raise ValidationError('New passwords do not match.')
+        return data

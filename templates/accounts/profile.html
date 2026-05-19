@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My profile — Indian Traditional Shop{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}?v=1.0">
+
+<div class="account-layout">
+  {% include "accounts/_account_nav.html" %}
+
+  <main class="account-main">
+    <h1 class="account-page-title">Your profile</h1>
+
+    {% if messages %}
+    <ul class="account-messages">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="profile-card profile-overview">
+      <div class="profile-avatar-block">
+        {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" alt="" class="profile-avatar-img">
+        {% else %}
+        <div class="profile-avatar-placeholder" aria-hidden="true">
+          <i class="fa fa-user"></i>
+        </div>
+        {% endif %}
+        <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit profile</a>
+      </div>
+
+      <div class="profile-details">
+        <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+        <p class="profile-email"><i class="fa fa-envelope"></i> {{ request.user.email }}</p>
+        <p><i class="fa fa-phone"></i> {{ request.user.phone_number|default:"—" }}</p>
+        <p><i class="fa fa-at"></i> {{ request.user.username }}</p>
+        <p class="profile-meta"><i class="fa fa-calendar"></i> Member since {{ request.user.date_joined|date:"F j, Y" }}</p>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <section class="profile-card">
+        <h3>About</h3>
+        <p class="profile-bio">{{ profile.bio|default:"No bio yet. Add one from Edit profile."|linebreaksbr }}</p>
+        {% if profile.date_of_birth %}
+        <p><strong>Date of birth:</strong> {{ profile.date_of_birth|date:"F j, Y" }}</p>
+        {% endif %}
+        {% if profile.gender %}
+        <p><strong>Gender:</strong> {{ profile.get_gender_display }}</p>
+        {% endif %}
+      </section>
+
+      <section class="profile-card">
+        <h3>Address</h3>
+        {% if profile.address_line1 or profile.city %}
+        <p>{{ profile.address_line1 }}</p>
+        {% if profile.address_line2 %}<p>{{ profile.address_line2 }}</p>{% endif %}
+        <p>{{ profile.city }}{% if profile.state %}, {{ profile.state }}{% endif %} {{ profile.pincode }}</p>
+        <p>{{ profile.country }}</p>
+        {% else %}
+        <p class="muted">No address saved. <a href="{% url 'profile_edit' %}">Add your address</a>.</p>
+        {% endif %}
+      </section>
+    </div>
+  </main>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load static %}
+<aside class="account-nav" aria-label="Account menu">
+  <div class="account-nav-inner">
+    <h2>My account</h2>
+    <nav>
+      <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+        <i class="fa fa-user" aria-hidden="true"></i> Profile
+      </a>
+      <a href="{% url 'profile_edit' %}" class="{% if request.resolver_match.url_name == 'profile_edit' %}active{% endif %}">
+        <i class="fa fa-pen-to-square" aria-hidden="true"></i> Edit profile
+      </a>
+      <a href="{% url 'profile_password' %}" class="{% if request.resolver_match.url_name == 'profile_password' %}active{% endif %}">
+        <i class="fa fa-lock" aria-hidden="true"></i> Change password
+      </a>
+      <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+        <i class="fa fa-gauge" aria-hidden="true"></i> Dashboard
+      </a>
+      <a href="{% url 'logout' %}" class="account-nav-logout">
+        <i class="fa fa-right-from-bracket" aria-hidden="true"></i> Log out
+      </a>
+    </nav>
+  </div>
+</aside>

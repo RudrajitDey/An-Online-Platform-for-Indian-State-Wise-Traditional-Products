@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit profile — Indian Traditional Shop{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}?v=1.0">
+
+<div class="account-layout">
+  {% include "accounts/_account_nav.html" %}
+
+  <main class="account-main">
+    <h1 class="account-page-title">Edit profile</h1>
+
+    {% if messages %}
+    <ul class="account-messages">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="profile-form profile-card">
+      {% csrf_token %}
+
+      {% if account_form.non_field_errors or profile_form.non_field_errors %}
+      <div class="form-errors">
+        {{ account_form.non_field_errors }}
+        {{ profile_form.non_field_errors }}
+      </div>
+      {% endif %}
+
+      <fieldset>
+        <legend>Account</legend>
+        <p class="form-hint">Email cannot be changed here. Contact support if you need to update it.</p>
+        <p class="readonly-field"><label>Email</label><span>{{ request.user.email }}</span></p>
+
+        {% for field in account_form %}
+        <div class="form-row{% if field.errors %} has-error{% endif %}">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {{ field.errors }}
+        </div>
+        {% endfor %}
+      </fieldset>
+
+      <fieldset>
+        <legend>Profile &amp; address</legend>
+        {% for field in profile_form %}
+        <div class="form-row{% if field.errors %} has-error{% endif %}">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.name == 'avatar' and profile_form.instance.avatar %}
+          <p class="form-hint">Current: <a href="{{ profile_form.instance.avatar.url }}" target="_blank" rel="noopener">view image</a></p>
+          {% endif %}
+          {{ field.errors }}
+        </div>
+        {% endfor %}
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </main>
+</div>
+{% endblock %}

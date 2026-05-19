@@ -11,6 +11,7 @@ from django.db import models
 
 from django.utils import timezone
 from datetime import timedelta
+from Home.models import State, Category
 
 # Create your views here.
 
@@ -73,6 +74,10 @@ def approve_vendor(request, id):
     v.status = 'approved'
     v.is_active = True
     v.save()
+
+    if v.user:
+        v.user.is_active = True
+        v.user.save()
 
     # 📧 Send Email
     send_mail(
@@ -439,108 +444,178 @@ def product_page(request):
 
 @login_required
 def add_product(request):
+
+    states = State.objects.all()
+
     try:
         vendor_obj = vendor.objects.get(user=request.user)
-    except vendor.DoesNotExist:
-        return render(request, 'vendor_dashboard/seller_pages/add_product.html', {
-            'error': 'You are not registered as a vendor'
-        })
 
-    # ❗ Prevent unapproved sellers
-    if vendor_obj.status != 'approved':
-        return render(request, 'vendor_dashboard/seller_pages/add_product.html', {
-            'error': 'Wait for admin approval before adding products'
-        })
+    except vendor.DoesNotExist:
+
+        messages.error(
+            request,
+            "You are not registered as vendor"
+        )
+
+        return redirect('home')
 
     if request.method == "POST":
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        category = request.POST.get('category')
-        brand = request.POST.get('brand')
-        price = request.POST.get('price')
-        stock = request.POST.get('stock')
-        expiry_date = request.POST.get('expiry_date')
-        image = request.FILES.get('image')
-        discount_price = request.POST.get('discount_price')
-        is_available=True if request.POST.get('is_available') == "True" else False
 
-        product = Product.objects.create(
+        name = request.POST.get('name')
+
+        description = request.POST.get('description')
+
+        state_id = request.POST.get('state')
+
+        category_id = request.POST.get('category')
+
+        brand = request.POST.get('brand')
+
+        price = request.POST.get('price')
+
+        stock = request.POST.get('stock')
+
+        expiry_date = request.POST.get('expiry_date')
+
+        image = request.FILES.get('image')
+
+        discount_price = request.POST.get('discount_price')
+
+        is_available = (
+            True if request.POST.get('is_available') == "True"
+            else False
+        )
+
+        state = State.objects.get(id=state_id)
+
+        category = Category.objects.get(id=category_id)
+
+        Product.objects.create(
+
             vendor=vendor_obj,
-            name=name,
-            slug=slugify(name),
-            description=description,
+
+            state=state,
+
             category=category,
+
+            name=name,
+
+            slug=slugify(name),
+
+            description=description,
+
             brand=brand,
+
             price=price,
+
             stock=stock,
+
             expiry_date=expiry_date,
+
             image=image,
+
             discount_price=discount_price,
+
             is_available=is_available
         )
 
+        messages.success(
+            request,
+            "Product Added Successfully ✅"
+        )
 
+        return redirect('add_product')
 
-        # 👉 Handle dynamic sections
-        section_types = request.POST.getlist('section_type[]')
-        titles = request.POST.getlist('section_title[]')
-        contents = request.POST.getlist('section_content[]')
-
-        for i in range(len(section_types)):
-            if contents[i]:  # avoid empty
-                content_obj = ProductContent.objects.create(
-                    product_s=product,
-                    section_type=section_types[i],
-                    title=titles[i],
-                    content=contents[i]
-                )
-
-                # 👉 Convert lines to bullet points
-                lines = contents[i].split("\n")
-                for line in lines:
-                    if line.strip():
-                        ProductPoint.objects.create(
-                            content=content_obj,
-                            text=line.strip()
-                        )
-
-        messages.success(request, "Product added successfully ✅")
-        return redirect('add_product')  # reload page
-
-    return render(request, 'vendor_dashboard/seller_pages/add_product.html')
+    return render(
+        request,
+        'vendor_dashboard/seller_pages/add_product.html',
+        {
+            'states': states
+        }
+    )
 
 # Edit Product
 
 @login_required
 def edit_product(request, id):
-    vendor_obj = get_object_or_404(vendor, user=request.user)
-    product = get_object_or_404(Product, id=id, vendor=vendor_obj)
+
+    vendor_obj = get_object_or_404(
+        vendor,
+        user=request.user
+    )
+
+    product = get_object_or_404(
+        Product,
+        id=id,
+        vendor=vendor_obj
+    )
+
+    states = State.objects.all()
 
     if request.method == "POST":
+
         product.name = request.POST.get('name')
+
+        product.slug = slugify(product.name)
+
         product.description = request.POST.get('description')
-        product.category = request.POST.get('category')
+
+        # Dynamic State & Category
+        state_id = request.POST.get('state')
+        category_id = request.POST.get('category')
+
+        product.state = get_object_or_404(
+            State,
+            id=state_id
+        )
+
+        product.category = get_object_or_404(
+            Category,
+            id=category_id
+        )
+
         product.brand = request.POST.get('brand')
+
         product.price = request.POST.get('price')
-        product.discount_price = request.POST.get('discount_price')
+
+        product.discount_price = request.POST.get(
+            'discount_price'
+        )
+
         product.stock = request.POST.get('stock')
-        product.expiry_date = request.POST.get('expiry_date')
 
-        # Boolean fix
-        product.is_available = True if request.POST.get('is_available') == "True" else False
+        product.expiry_date = request.POST.get(
+            'expiry_date'
+        )
 
-        # Image update (optional)
+        # Boolean field
+        product.is_available = (
+            True if request.POST.get('is_available')
+            == "True" else False
+        )
+
+        # Optional image update
         if request.FILES.get('image'):
+
             product.image = request.FILES.get('image')
 
         product.save()
-        messages.success(request, "Product updated successfully ✅")
+
+        messages.success(
+            request,
+            "Product updated successfully ✅"
+        )
+
         return redirect('product_page')
 
-    return render(request, 'vendor_dashboard/seller_pages/edit_product.html', {
-        'product': product
-    })
-
+    return render(
+        request,
+        'vendor_dashboard/seller_pages/edit_product.html',
+        {
+            'product': product,
+            'states': states
+        }
+    )
 # Delete Product
 
 @login_required
@@ -551,3 +626,90 @@ def delete_product(request, id):
     product.delete()
     messages.success(request, "Product deleted successfully ❌")
     return redirect('product_page')
+
+@login_required
+def all_products(request):
+
+    # Logged in vendor
+    vendor_obj = get_object_or_404(
+        vendor,
+        user=request.user
+    )
+
+    # Only this vendor products
+    products = Product.objects.filter(
+        vendor=vendor_obj
+    ).order_by('-id')
+
+    total_products = products.count()
+
+    available_products = products.filter(
+        is_available=True
+    ).count()
+
+    out_of_stock = products.filter(
+        stock=0
+    ).count()
+
+    context = {
+
+        'products': products,
+
+        'total_products': total_products,
+
+        'available_products': available_products,
+
+        'out_of_stock': out_of_stock
+    }
+
+    return render(
+        request,
+        'vendor_dashboard/seller_pages/all_products.html',
+        context
+    )
+
+
+from orders.models import OrderProduct
+
+@login_required
+def all_orders(request):
+
+    vendor_obj = get_object_or_404(
+        vendor,
+        user=request.user
+    )
+
+    orders = OrderProduct.objects.filter(
+        product__vendor=vendor_obj
+    ).select_related(
+        'order',
+        'product',
+        'user'
+    ).order_by('-created_at')
+
+    total_orders = orders.count()
+
+    completed_orders = orders.filter(
+        ordered=True
+    ).count()
+
+    pending_orders = orders.filter(
+        ordered=False
+    ).count()
+
+    context = {
+
+        'orders': orders,
+
+        'total_orders': total_orders,
+
+        'completed_orders': completed_orders,
+
+        'pending_orders': pending_orders
+    }
+
+    return render(
+        request,
+        'vendor_dashboard/seller_pages/all_orders.html',
+        context
+    )

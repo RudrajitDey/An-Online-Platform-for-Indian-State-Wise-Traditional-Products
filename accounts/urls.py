@@ -1,7 +1,6 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     
@@ -9,8 +8,11 @@ urlpatterns = [
     path("login/", views.login, name="login"),
     path("logout/", views.logout, name="logout"),
     path("dashboard/", views.dashboard, name="dashboard"),
+    path("profile/", views.user_profile, name="profile"),
+    path("profile/edit/", views.edit_profile, name="profile_edit"),
+    path("profile/password/", views.change_password, name="profile_password"),
 
-    path("", views.dashboard, name="dashboard"),
+    path("", RedirectView.as_view(pattern_name="dashboard", permanent=False)),
 
     path("activate/<uidb64>/<token>/", views.activate, name='activate'),
 
@@ -19,8 +21,4 @@ urlpatterns = [
     path("resetPassword/", views.resetPassword, name="resetPassword"),
 
 
-]   
-
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

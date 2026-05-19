@@ -1,85 +1,48 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Dashboard</title>
-    <link rel="stylesheet" href="{% static 'accounts/dashboard.css' %}?v=1.0">
-</head>
-<body>
+{% block title %}My account — Indian Traditional Shop{% endblock %}
 
-<div class="dashboard">
+{% block content %}
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}?v=1.0">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h3>My Account</h3>
-        <ul>
-            <li class="active">My order history</li>
-            <li>Transactions</li>
-            <li>Return and refunds</li>
-            <li>Settings</li>
-            <li>My Selling Items</li>
-            <li>Received orders</li>
+<div class="account-layout">
+  {% include "accounts/_account_nav.html" %}
+
+  <main class="account-main">
+    <h1 class="account-page-title">Dashboard</h1>
+
+    {% if messages %}
+    <ul class="account-messages">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="profile-card">
+      <p>Welcome back, <strong>{{ user.first_name }}</strong>.</p>
+      <p class="form-hint" style="margin-top:1rem;">Manage your profile, password, and orders from the menu on the left.</p>
+      <p style="margin-top:1rem;">
+        <a href="{% url 'profile' %}" class="btn btn-primary">View profile</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Continue shopping</a>
+      </p>
+    </div>
+
+    <div class="profile-grid">
+      <section class="profile-card">
+        <h3>Quick links</h3>
+        <ul style="margin:0;padding-left:1.2rem;color:#475569;line-height:1.8;">
+          <li><a href="{% url 'profile_edit' %}">Edit profile &amp; address</a></li>
+          <li><a href="{% url 'profile_password' %}">Change password</a></li>
+          <li><a href="{% url 'cart' %}">Shopping cart</a></li>
         </ul>
-        <button class="logout">Log out</button>
+      </section>
+      <section class="profile-card">
+        <h3>Orders</h3>
+        <p class="muted">Order history will appear here when connected to the orders app.</p>
+      </section>
     </div>
-
-    <!-- Main Content -->
-    <div class="content">
-
-        <div class="order-header">
-            <h3>Order ID: 6123456789</h3>
-            <p>Order Date: 16 December 2018</p>
-        </div>
-
-        <div class="order-info">
-            <div>
-                <h4>Delivery to</h4>
-                <p>Michael Jackson</p>
-                <p>Phone: +1234567890</p>
-                <p>Email: example@mail.com</p>
-                <p>Address: Street 123, City</p>
-            </div>
-
-            <div>
-                <h4>Payment</h4>
-                <p>VISA **** 4216</p>
-                <p>Subtotal: $356</p>
-                <p>Shipping: $56</p>
-                <h4>Total: $456</h4>
-            </div>
-        </div>
-
-        <!-- Product List -->
-        <div class="product">
-            <img src="https://via.placeholder.com/60" alt="">
-            <div class="details">
-                <p>Product name goes here</p>
-                <span>$145</span>
-            </div>
-            <div class="seller">Nike clothing</div>
-            <div class="actions">
-                <button>Track Order</button>
-                <button class="secondary">Details</button>
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="https://via.placeholder.com/60" alt="">
-            <div class="details">
-                <p>Another product name</p>
-                <span>$100</span>
-            </div>
-            <div class="seller">ABC Shop</div>
-            <div class="actions">
-                <button>Track Order</button>
-                <button class="secondary">Details</button>
-            </div>
-        </div>
-
-    </div>
+  </main>
 </div>
-
-</body>
-</html>
+{% endblock %}
