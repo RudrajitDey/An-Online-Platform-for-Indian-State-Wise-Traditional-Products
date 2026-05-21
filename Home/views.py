@@ -189,7 +189,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
  
 
-@login_required
+
 def vendor_dashboard(request):
     
     
