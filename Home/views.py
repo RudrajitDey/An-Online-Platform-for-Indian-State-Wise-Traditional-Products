@@ -235,3 +235,59 @@ def search(request):
 def terms_condition(request):
     return render(request, 'footer/terms_condition.html')
 
+
+def privacy_policy(request):
+    return render(request, 'footer/privacy_policy.html')
+
+
+def contact_us(request):
+    return render(request, 'footer/contact_us.html')
+
+def footer_faq(request):
+    return render(request, 'footer/footer_faq.html')
+
+def about(request):
+    return render(request, 'footer/about.html')
+
+
+# Error Handler Views
+def error_404(request, exception=None):
+    """Handle 404 Page Not Found errors"""
+    return render(request, 'errors/404.html', status=404)
+
+
+def error_500(request):
+    """Handle 500 Server Error"""
+    return render(request, 'errors/500.html', status=500)
+
+
+def error_400(request, exception=None):
+    """Handle 400 Bad Request errors"""
+    return render(request, 'errors/400.html', status=400)
+
+def mission(request):
+    return render(request, 'footer/mission.html')
+
+def support_artisans(request):
+    return render(request, 'footer/support_artisans.html')
+
+def reviews(request):
+    return render(request, 'footer/reviews.html')
+
+def return_policy(request):
+    return render(request, 'footer/return_policy.html')
+
+
+def shipping_info(request):
+    return render(request, 'footer/shipping_info.html')
+
+
+def payment_methods(request):
+    return render(request, 'footer/payment_methods.html')
+
+
+def help_center(request):
+    return render(request, 'footer/help_center.html')
+
+
+

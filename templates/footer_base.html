@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Indian Traditional Shop{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'home.css' %}?v=4.1">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v=6.1">
 
     <script src="https://www.paypal.com/sdk/js?client-id=Ac0Od556aUEX1pzwe6NeS4bjMBlJlQ4AJfOpyTXXFM4_k4wCFJqTEbEX3WRmPLg9xmHW2Fdcdr8c58BJ&currency=USD"></script>
     
@@ -58,7 +58,7 @@
 
     <a href="{% url 'cart' %}">
     <div class="icons">
-     <i class="fa fa-shopping-cart"></i>
+    <i class="fa fa-basket-shopping"></i>
       {% if cart_count > 0 %}
       <span class="cart-count">{{cart_count}}</span>
       {% endif %}
@@ -195,11 +195,11 @@ overlay.addEventListener("click", () => {
 
                 <li><a href="{% url 'terms_condition' %}">Terms & Conditions</a></li>
 
-                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
 
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
 
-                <li><a href="#">FAQ</a></li>
+                <li><a href="{% url 'footer_faq' %}">FAQ</a></li>
 
             </ul>
 
@@ -214,15 +214,15 @@ overlay.addEventListener("click", () => {
 
             <ul>
 
-                <li><a href="#">About CultureSparsh</a></li>
+                <li><a href="{% url 'about' %}">About CultureSparsh</a></li>
 
-                <li><a href="#">Our Mission</a></li>
+                <li><a href="{% url 'mission' %}">Our Mission</a></li>
 
-                <li><a href="#">Support Indian Artisans</a></li>
+                <li><a href="{% url 'support_artisans' %}">Support Indian Artisans</a></li>
 
-                <li><a href="#">Customer Reviews</a></li>
+                <li><a href="{% url 'reviews' %}">Customer Reviews</a></li>
 
-                <li><a href="#">Become a Seller</a></li>
+                <li><a href="{% url 'become_seller' %}">Become a Seller</a></li>
 
                
 
@@ -241,13 +241,13 @@ overlay.addEventListener("click", () => {
 
                
 
-                <li><a href="#">Return Policy</a></li>
+                <li><a href="{% url 'return_policy' %}">Return Policy</a></li>
 
-                <li><a href="#">Shipping Info</a></li>
+                <li><a href="{% url 'shipping_info' %}">Shipping Info</a></li>
 
-                <li><a href="#">Payment Methods</a></li>
+                <li><a href="{% url 'payment_methods' %}">Payment Methods</a></li>
 
-                <li><a href="#">Help Center</a></li>
+                <li><a href="{% url 'help_center' %}">Help Center</a></li>
 
 
             </ul>
@@ -263,13 +263,13 @@ overlay.addEventListener("click", () => {
 
             <ul>
 
-                <li><a href="#">Your Account</a></li>
+                <li><a href="{% url 'profile' %}">Your Account</a></li>
 
-                <li><a href="#">Change Password</a></li>
+                <li><a href="{% url 'profile_password' %}">Change Password</a></li>
 
-                <li><a href="#">All Orders</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
 
-                <li><a href="#">Help</a></li>
+                <li><a href="{% url 'help_center' %}">Help</a></li>
 
 
             </ul>
@@ -284,7 +284,7 @@ overlay.addEventListener("click", () => {
     <div class="premium-footer-bottom">
 
         <p>
-            © 2026 PlatinumRX. All Rights Reserved.
+            © 2026 CultureSparsh. All Rights Reserved.
         </p>
 
     </div>

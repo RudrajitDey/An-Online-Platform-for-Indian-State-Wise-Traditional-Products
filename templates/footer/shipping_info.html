@@ -1,0 +1,102 @@
+{% extends 'footer_base.html' %}
+
+{% block title %}Shipping_Info{% endblock title %}
+{% block content %}
+
+<style>
+
+.shipping-wrapper{
+    background:#f4f6f9;
+    padding:60px 20px;
+}
+
+.shipping-container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.shipping-box{
+    background:#fff;
+    padding:50px;
+    border-radius:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.shipping-title{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.shipping-subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:40px;
+}
+
+.shipping-section{
+    margin-bottom:30px;
+}
+
+.shipping-section h2{
+    margin-bottom:15px;
+    color:#1f2937;
+}
+
+.shipping-section p,
+.shipping-section li{
+    color:#555;
+    line-height:1.8;
+}
+
+.shipping-section ul{
+    padding-left:20px;
+}
+
+</style>
+
+<div class="shipping-wrapper">
+
+    <div class="shipping-container">
+
+        <div class="shipping-box">
+
+            <h1 class="shipping-title">
+                Shipping Information
+            </h1>
+
+            <p class="shipping-subtitle">
+                Fast and secure delivery across India.
+            </p>
+
+            <div class="shipping-section">
+
+                <h2>Delivery Details</h2>
+
+                <ul>
+                    <li>Orders are processed within 24-48 hours.</li>
+                    <li>Delivery time may vary by location.</li>
+                    <li>Tracking details are shared after dispatch.</li>
+                </ul>
+
+            </div>
+
+            <div class="shipping-section">
+
+                <h2>Shipping Charges</h2>
+
+                <p>
+                    Shipping charges may vary depending on order value
+                    and delivery location.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

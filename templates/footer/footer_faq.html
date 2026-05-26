@@ -1,0 +1,173 @@
+{% extends "footer_base.html" %}
+
+{% block title %}FAQs{% endblock title %}
+
+{% block content %}
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        background:#f4f6f9;
+        color:#333;
+        line-height:1.6;
+    }
+
+    .tradfaq-container{
+        max-width:900px;
+        margin:50px auto;
+        background:#fff;
+        padding:40px;
+        border-radius:12px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .tradfaq-title{
+        text-align:center;
+        font-size:38px;
+        margin-bottom:10px;
+        color:#1f2937;
+    }
+
+    .tradfaq-subtitle{
+        text-align:center;
+        color:#777;
+        margin-bottom:40px;
+        font-size:15px;
+    }
+
+    .tradfaq-item{
+        border-bottom:1px solid #e5e7eb;
+        padding:20px 0;
+    }
+
+    .tradfaq-question{
+        font-size:20px;
+        font-weight:600;
+        margin-bottom:10px;
+        color:#111827;
+    }
+
+    .tradfaq-answer{
+        color:#555;
+        font-size:15px;
+        line-height:1.8;
+    }
+
+    .tradfaq-highlight{
+        background:#eef4ff;
+        border-left:5px solid #2563eb;
+        padding:15px;
+        border-radius:6px;
+        margin-top:30px;
+        color:#444;
+    }
+
+    .tradfaq-footer{
+        text-align:center;
+        margin-top:40px;
+        color:#888;
+        font-size:14px;
+    }
+
+    @media(max-width:768px){
+
+        .tradfaq-container{
+            margin:20px;
+            padding:25px;
+        }
+
+        .tradfaq-title{
+            font-size:30px;
+        }
+
+        .tradfaq-question{
+            font-size:18px;
+        }
+    }
+</style>
+
+<div class="tradfaq-container">
+
+    <h1 class="tradfaq-title">Frequently Asked Questions</h1>
+
+    <p class="tradfaq-subtitle">
+        Find answers to the most common questions about our platform.
+    </p>
+
+    <div class="tradfaq-item">
+        <h2 class="tradfaq-question">1. What is this platform about?</h2>
+
+        <p class="tradfaq-answer">
+            Our platform helps users discover and purchase traditional
+            state-wise products from different regions of India.
+        </p>
+    </div>
+
+    <div class="tradfaq-item">
+        <h2 class="tradfaq-question">2. How can I place an order?</h2>
+
+        <p class="tradfaq-answer">
+            Browse products, add items to your cart, and complete
+            checkout using secure online payment methods.
+        </p>
+    </div>
+
+    <div class="tradfaq-item">
+        <h2 class="tradfaq-question">3. How can I become a seller?</h2>
+
+        <p class="tradfaq-answer">
+            Click on the “Become a Seller” option, fill out the registration form,
+            upload required documents, and wait for admin approval.
+        </p>
+    </div>
+
+    <div class="tradfaq-item">
+        <h2 class="tradfaq-question">4. Are the products authentic?</h2>
+
+        <p class="tradfaq-answer">
+            Yes, sellers are verified before approval to ensure genuine
+            and quality traditional products.
+        </p>
+    </div>
+
+    <div class="tradfaq-item">
+        <h2 class="tradfaq-question">5. Which payment methods are supported?</h2>
+
+        <p class="tradfaq-answer">
+            We support online payments including UPI, Debit Card,
+            Credit Card, Net Banking, and PayPal.
+        </p>
+    </div>
+
+    <div class="tradfaq-item">
+        <h2 class="tradfaq-question">6. Can I cancel or return an order?</h2>
+
+        <p class="tradfaq-answer">
+            Yes, cancellation and return options are available according
+            to our refund and return policy.
+        </p>
+    </div>
+
+    <div class="tradfaq-item">
+        <h2 class="tradfaq-question">7. How do I contact customer support?</h2>
+
+        <p class="tradfaq-answer">
+            You can contact our support team through the Contact Us page
+            or email us directly for assistance.
+        </p>
+    </div>
+
+    <div class="tradfaq-highlight">
+        Still have questions? Feel free to contact our support team anytime.
+    </div>
+
+</div>
+
+{% endblock %}
+

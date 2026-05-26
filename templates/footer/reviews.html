@@ -1,0 +1,128 @@
+{% extends 'footer_base.html' %}
+
+{% block title %}Customer Review{% endblock title %}
+
+{% block content %}
+
+<style>
+
+.review-page-wrapper{
+    background:#f4f6f9;
+    padding:60px 20px;
+}
+
+.review-page-container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.review-page-title{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.review-page-subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:45px;
+}
+
+.review-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.review-card{
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.review-card h3{
+    margin-bottom:10px;
+    color:#111827;
+}
+
+.review-stars{
+    color:#f4b400;
+    margin-bottom:15px;
+    font-size:18px;
+}
+
+.review-card p{
+    color:#555;
+    line-height:1.7;
+}
+
+@media(max-width:900px){
+    .review-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+<div class="review-page-wrapper">
+
+    <div class="review-page-container">
+
+        <h1 class="review-page-title">
+            Customer Reviews
+        </h1>
+
+        <p class="review-page-subtitle">
+            See what our customers say about CultureSparsh.
+        </p>
+
+        <div class="review-grid">
+
+            <div class="review-card">
+                <h3>Priya Sharma</h3>
+
+                <div class="review-stars">
+                    ★★★★★
+                </div>
+
+                <p>
+                    Amazing quality products and fast delivery.
+                    I loved the handmade Assam silk collection.
+                </p>
+            </div>
+
+            <div class="review-card">
+                <h3>Rahul Verma</h3>
+
+                <div class="review-stars">
+                    ★★★★★
+                </div>
+
+                <p>
+                    Great platform to discover authentic Indian traditional items.
+                    Highly recommended.
+                </p>
+            </div>
+
+            <div class="review-card">
+                <h3>Ananya Das</h3>
+
+                <div class="review-stars">
+                    ★★★★★
+                </div>
+
+                <p>
+                    Beautiful packaging and genuine handcrafted products.
+                    Customer support was also very helpful.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

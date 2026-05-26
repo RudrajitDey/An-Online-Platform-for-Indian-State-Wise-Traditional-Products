@@ -1,0 +1,124 @@
+{% extends 'footer_base.html' %}
+
+{% block title %}Help Center{% endblock title %}
+
+{% block content %}
+
+<style>
+
+.help-wrapper{
+    background:#f4f6f9;
+    padding:60px 20px;
+}
+
+.help-container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.help-box{
+    background:#fff;
+    padding:50px;
+    border-radius:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.help-title{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.help-subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:40px;
+}
+
+.help-section{
+    margin-bottom:30px;
+}
+
+.help-section h2{
+    margin-bottom:15px;
+    color:#1f2937;
+}
+
+.help-section p,
+.help-section li{
+    color:#555;
+    line-height:1.8;
+}
+
+.help-section ul{
+    padding-left:20px;
+}
+
+.help-contact-box{
+    background:#eef4ff;
+    border-left:5px solid #2563eb;
+    padding:20px;
+    border-radius:8px;
+    margin-top:30px;
+}
+
+</style>
+
+<div class="help-wrapper">
+
+    <div class="help-container">
+
+        <div class="help-box">
+
+            <h1 class="help-title">
+                Help Center
+            </h1>
+
+            <p class="help-subtitle">
+                We're here to help you with your questions.
+            </p>
+
+            <div class="help-section">
+
+                <h2>Common Help Topics</h2>
+
+                <ul>
+                    <li>Order Tracking</li>
+                    <li>Refund & Returns</li>
+                    <li>Seller Registration</li>
+                    <li>Payment Issues</li>
+                </ul>
+
+            </div>
+
+            <div class="help-section">
+
+                <h2>Need Assistance?</h2>
+
+                <p>
+                    Contact our support team for quick assistance
+                    regarding orders, payments, or seller accounts.
+                </p>
+
+            </div>
+
+            <div class="help-contact-box">
+
+                <p>
+                    Email: support@culturesparsh.com
+                </p>
+
+                <p>
+                    Phone: +91 98765 43210
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

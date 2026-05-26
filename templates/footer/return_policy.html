@@ -1,0 +1,103 @@
+{% extends 'footer_base.html' %}
+
+{% block title %}Return Policy{% endblock title %}
+
+{% block content %}
+
+<style>
+
+.return-policy-wrapper{
+    background:#f4f6f9;
+    padding:60px 20px;
+}
+
+.return-policy-container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.return-policy-box{
+    background:#fff;
+    padding:50px;
+    border-radius:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.return-policy-title{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.return-policy-subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:40px;
+}
+
+.return-policy-section{
+    margin-bottom:30px;
+}
+
+.return-policy-section h2{
+    margin-bottom:15px;
+    color:#1f2937;
+}
+
+.return-policy-section p,
+.return-policy-section li{
+    color:#555;
+    line-height:1.8;
+}
+
+.return-policy-section ul{
+    padding-left:20px;
+}
+
+</style>
+
+<div class="return-policy-wrapper">
+
+    <div class="return-policy-container">
+
+        <div class="return-policy-box">
+
+            <h1 class="return-policy-title">
+                Return Policy
+            </h1>
+
+            <p class="return-policy-subtitle">
+                Easy and transparent return process for customers.
+            </p>
+
+            <div class="return-policy-section">
+
+                <h2>Eligibility for Returns</h2>
+
+                <ul>
+                    <li>Items must be returned within 7 days.</li>
+                    <li>Products should be unused and undamaged.</li>
+                    <li>Original packaging must be available.</li>
+                </ul>
+
+            </div>
+
+            <div class="return-policy-section">
+
+                <h2>Refund Process</h2>
+
+                <p>
+                    Refunds are processed after successful inspection
+                    of the returned product.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

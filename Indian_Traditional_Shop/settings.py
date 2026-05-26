@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-bp(w%%p1t)(0m6jfp*&pk)1)cf3yudz5y%_y62g1@_6l7@)oh=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.Account'
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'Home.middleware.CustomErrorMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

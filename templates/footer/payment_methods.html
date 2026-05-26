@@ -1,0 +1,104 @@
+{% extends 'footer_base.html' %}
+
+{% block title %}Payment Method{% endblock title %}
+
+{% block content %}
+
+<style>
+
+.payment-wrapper{
+    background:#f4f6f9;
+    padding:60px 20px;
+}
+
+.payment-container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.payment-box{
+    background:#fff;
+    padding:50px;
+    border-radius:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.payment-title{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.payment-subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:40px;
+}
+
+.payment-section{
+    margin-bottom:30px;
+}
+
+.payment-section h2{
+    margin-bottom:15px;
+    color:#1f2937;
+}
+
+.payment-section p,
+.payment-section li{
+    color:#555;
+    line-height:1.8;
+}
+
+.payment-section ul{
+    padding-left:20px;
+}
+
+</style>
+
+<div class="payment-wrapper">
+
+    <div class="payment-container">
+
+        <div class="payment-box">
+
+            <h1 class="payment-title">
+                Payment Methods
+            </h1>
+
+            <p class="payment-subtitle">
+                Secure and trusted payment options.
+            </p>
+
+            <div class="payment-section">
+
+                <h2>Supported Methods</h2>
+
+                <ul>
+                    <li>UPI Payments</li>
+                    <li>Debit & Credit Cards</li>
+                    <li>Net Banking</li>
+                    <li>PayPal</li>
+                </ul>
+
+            </div>
+
+            <div class="payment-section">
+
+                <h2>Payment Security</h2>
+
+                <p>
+                    All transactions are protected with secure
+                    encryption technologies.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

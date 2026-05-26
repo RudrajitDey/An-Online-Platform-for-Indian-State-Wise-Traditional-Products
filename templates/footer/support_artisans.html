@@ -1,0 +1,144 @@
+{% extends 'footer_base.html' %}
+
+{% block title %}Support Local Artist{% endblock title %}
+
+{% block content %}
+
+<style>
+
+.support-artisan-wrapper{
+    background:#f4f6f9;
+    padding:60px 20px;
+}
+
+.support-artisan-container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.support-artisan-box{
+    background:#fff;
+    padding:50px;
+    border-radius:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.support-artisan-title{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.support-artisan-subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:40px;
+}
+
+.support-artisan-section{
+    margin-bottom:35px;
+}
+
+.support-artisan-section h2{
+    margin-bottom:15px;
+    color:#1f2937;
+}
+
+.support-artisan-section p{
+    color:#555;
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+.support-artisan-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+    margin-top:30px;
+}
+
+.support-artisan-card{
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+    padding:25px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.support-artisan-card h3{
+    margin-bottom:10px;
+    color:#111827;
+}
+
+.support-artisan-card p{
+    color:#666;
+    font-size:15px;
+}
+
+@media(max-width:900px){
+    .support-artisan-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+<div class="support-artisan-wrapper">
+
+    <div class="support-artisan-container">
+
+        <div class="support-artisan-box">
+
+            <h1 class="support-artisan-title">
+                Support Indian Artisans
+            </h1>
+
+            <p class="support-artisan-subtitle">
+                Empowering local craftsmen and preserving Indian traditions.
+            </p>
+
+            <div class="support-artisan-section">
+
+                <h2>Why We Support Artisans</h2>
+
+                <p>
+                    India is home to thousands of skilled artisans and craftsmen
+                    who create beautiful handmade products using traditional methods.
+                    Our platform helps them reach a larger audience online.
+                </p>
+
+            </div>
+
+            <div class="support-artisan-grid">
+
+                <div class="support-artisan-card">
+                    <h3>Handmade Products</h3>
+                    <p>
+                        Discover authentic handmade items created with passion and skill.
+                    </p>
+                </div>
+
+                <div class="support-artisan-card">
+                    <h3>Fair Opportunities</h3>
+                    <p>
+                        We help artisans grow their businesses through digital platforms.
+                    </p>
+                </div>
+
+                <div class="support-artisan-card">
+                    <h3>Preserve Culture</h3>
+                    <p>
+                        Every purchase supports India’s rich cultural heritage.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,243 @@
+{% extends 'footer_base.html' %}
+
+{% block title %}Our Mission{% endblock title %}
+
+{% block content %}
+
+<style>
+
+    .mission-page-wrapper{
+        background:#f4f6f9;
+        padding:60px 20px;
+    }
+
+    .mission-page-container{
+        max-width:1100px;
+        margin:auto;
+    }
+
+    .mission-page-box{
+        background:#ffffff;
+        padding:50px;
+        border-radius:14px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .mission-page-title{
+        text-align:center;
+        font-size:42px;
+        color:#111827;
+        margin-bottom:15px;
+    }
+
+    .mission-page-subtitle{
+        text-align:center;
+        color:#666;
+        font-size:16px;
+        margin-bottom:45px;
+    }
+
+    .mission-page-section{
+        margin-bottom:40px;
+    }
+
+    .mission-page-section h2{
+        font-size:28px;
+        margin-bottom:15px;
+        color:#1f2937;
+    }
+
+    .mission-page-section p{
+        font-size:16px;
+        color:#555;
+        line-height:1.8;
+        margin-bottom:15px;
+    }
+
+    .mission-highlight-box{
+        background:#eef4ff;
+        border-left:5px solid #2563eb;
+        padding:20px;
+        border-radius:8px;
+        margin-top:20px;
+    }
+
+    .mission-highlight-box p{
+        margin:0;
+        color:#333;
+        font-weight:500;
+    }
+
+    .mission-values-grid{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:25px;
+        margin-top:30px;
+    }
+
+    .mission-value-card{
+        background:#f9fafb;
+        padding:25px;
+        border-radius:10px;
+        border:1px solid #e5e7eb;
+        text-align:center;
+        transition:0.3s;
+    }
+
+    .mission-value-card:hover{
+        transform:translateY(-5px);
+        box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .mission-value-card h3{
+        font-size:22px;
+        margin-bottom:12px;
+        color:#111827;
+    }
+
+    .mission-value-card p{
+        color:#666;
+        font-size:15px;
+        line-height:1.7;
+    }
+
+    .mission-footer-note{
+        text-align:center;
+        margin-top:50px;
+        color:#888;
+        font-size:14px;
+    }
+
+    @media(max-width:900px){
+
+        .mission-values-grid{
+            grid-template-columns:1fr;
+        }
+    }
+
+    @media(max-width:768px){
+
+        .mission-page-box{
+            padding:30px 20px;
+        }
+
+        .mission-page-title{
+            font-size:32px;
+        }
+
+        .mission-page-section h2{
+            font-size:24px;
+        }
+    }
+
+</style>
+
+<div class="mission-page-wrapper">
+
+    <div class="mission-page-container">
+
+        <div class="mission-page-box">
+
+            <h1 class="mission-page-title">
+                Our Mission
+            </h1>
+
+            <p class="mission-page-subtitle">
+                Preserving Indian culture by empowering artisans and promoting authentic traditional products.
+            </p>
+
+            <div class="mission-page-section">
+
+                <h2>Empowering Local Artisans</h2>
+
+                <p>
+                    Our mission is to support talented artisans, craftsmen,
+                    and small businesses from every corner of India by providing
+                    them with a digital platform to showcase and sell their products.
+                </p>
+
+                <p>
+                    We believe every handmade product carries the story,
+                    culture, and tradition of its region.
+                </p>
+
+            </div>
+
+            <div class="mission-page-section">
+
+                <h2>Promoting Indian Heritage</h2>
+
+                <p>
+                    CultureSparsh is dedicated to preserving India’s rich
+                    cultural heritage through authentic state-wise products,
+                    traditional crafts, handlooms, and regional specialties.
+                </p>
+
+                <div class="mission-highlight-box">
+                    <p>
+                        “Connecting modern shoppers with timeless Indian traditions.”
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="mission-page-section">
+
+                <h2>Our Core Values</h2>
+
+                <div class="mission-values-grid">
+
+                    <div class="mission-value-card">
+                        <h3>Authenticity</h3>
+
+                        <p>
+                            We focus on genuine traditional products
+                            created by verified artisans and sellers.
+                        </p>
+                    </div>
+
+                    <div class="mission-value-card">
+                        <h3>Empowerment</h3>
+
+                        <p>
+                            Helping local craftsmen and small businesses
+                            grow through digital opportunities.
+                        </p>
+                    </div>
+
+                    <div class="mission-value-card">
+                        <h3>Trust</h3>
+
+                        <p>
+                            Providing secure shopping, quality products,
+                            and customer satisfaction.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mission-page-section">
+
+                <h2>Future Goals</h2>
+
+                <p>
+                    Our future vision is to build India’s largest marketplace
+                    for traditional and cultural products while supporting
+                    sustainable growth for local communities and artisans.
+                </p>
+
+            </div>
+
+            <p class="mission-footer-note">
+                © 2026 CultureSparsh. Celebrating India’s Heritage Through Every Product.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

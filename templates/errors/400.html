@@ -1,0 +1,234 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bad Request - CultureSparsh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .error-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 600px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .error-title {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .error-icon {
+            font-size: 80px;
+            color: #fa709a;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(250, 112, 154, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #fa709a;
+        }
+
+        .btn-secondary:hover {
+            background: #fa709a;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .suggestions {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .suggestions h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .suggestions ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .suggestions li {
+            padding: 8px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .suggestions li:before {
+            content: "→ ";
+            color: #fa709a;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .error-details {
+            background: #fff5f7;
+            border-left: 4px solid #fa709a;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 6px;
+            text-align: left;
+            font-size: 13px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 40px 20px;
+                margin: 20px;
+            }
+
+            .error-code {
+                font-size: 80px;
+            }
+
+            .error-title {
+                font-size: 24px;
+            }
+
+            .error-icon {
+                font-size: 60px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+
+        <div class="error-code">400</div>
+
+        <h1 class="error-title">Bad Request</h1>
+
+        <p class="error-message">
+            The request you made is invalid or malformed. This could be due to 
+            incorrect URL parameters, missing required data, or a URL mismatch.
+        </p>
+
+        <div class="button-group">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i> Go to Home
+            </a>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </a>
+        </div>
+
+        <div class="suggestions">
+            <h3>What you can do:</h3>
+            <ul>
+                <li>Double-check the URL for any typos or errors</li>
+                <li>Verify that all required parameters are included</li>
+                <li>Ensure you're using the correct request method</li>
+                <li>Try navigating using the menu instead of typing the URL</li>
+                <li>Clear your browser cache if the issue persists</li>
+            </ul>
+        </div>
+
+        <div class="error-details">
+            <strong>Technical Details:</strong><br>
+            A malformed request was sent to the server. This typically occurs when:
+            <ul style="margin-top: 8px; padding-left: 15px;">
+                <li>URL parameters don't match expected format</li>
+                <li>Form data is incomplete or corrupted</li>
+                <li>Request headers are missing or invalid</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

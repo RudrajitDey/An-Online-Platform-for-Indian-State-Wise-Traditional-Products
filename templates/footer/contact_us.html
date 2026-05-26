@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ Page</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        background:#f4f6f9;
+        color:#333;
+        line-height:1.6;
+    }
+
+    .faq-container{
+        max-width:900px;
+        margin:50px auto;
+        background:#fff;
+        padding:40px;
+        border-radius:12px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .faq-title{
+        text-align:center;
+        font-size:38px;
+        margin-bottom:10px;
+        color:#1f2937;
+    }
+
+    .faq-subtitle{
+        text-align:center;
+        color:#777;
+        margin-bottom:40px;
+        font-size:15px;
+    }
+
+    .faq-item{
+        border-bottom:1px solid #e5e7eb;
+        padding:20px 0;
+    }
+
+    .faq-question{
+        font-size:20px;
+        font-weight:600;
+        margin-bottom:10px;
+        color:#111827;
+    }
+
+    .faq-answer{
+        color:#555;
+        font-size:15px;
+        line-height:1.8;
+    }
+
+    .faq-highlight{
+        background:#eef4ff;
+        border-left:5px solid #2563eb;
+        padding:15px;
+        border-radius:6px;
+        margin-top:30px;
+        color:#444;
+    }
+
+    .faq-footer{
+        text-align:center;
+        margin-top:40px;
+        color:#888;
+        font-size:14px;
+    }
+
+    @media(max-width:768px){
+
+        .faq-container{
+            margin:20px;
+            padding:25px;
+        }
+
+        .faq-title{
+            font-size:30px;
+        }
+
+        .faq-question{
+            font-size:18px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="faq-container">
+
+    <h1 class="faq-title">Frequently Asked Questions</h1>
+
+    <p class="faq-subtitle">
+        Find answers to the most common questions about our platform.
+    </p>
+
+    <div class="faq-item">
+        <h2 class="faq-question">1. What is this platform about?</h2>
+
+        <p class="faq-answer">
+            Our platform helps users discover and purchase traditional
+            state-wise products from different regions of India.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h2 class="faq-question">2. How can I place an order?</h2>
+
+        <p class="faq-answer">
+            Browse products, add items to your cart, and complete
+            checkout using secure online payment methods.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h2 class="faq-question">3. How can I become a seller?</h2>
+
+        <p class="faq-answer">
+            Click on the “Become a Seller” option, fill out the registration form,
+            upload required documents, and wait for admin approval.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h2 class="faq-question">4. Are the products authentic?</h2>
+
+        <p class="faq-answer">
+            Yes, sellers are verified before approval to ensure genuine
+            and quality traditional products.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h2 class="faq-question">5. Which payment methods are supported?</h2>
+
+        <p class="faq-answer">
+            We support online payments including UPI, Debit Card,
+            Credit Card, Net Banking, and PayPal.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h2 class="faq-question">6. Can I cancel or return an order?</h2>
+
+        <p class="faq-answer">
+            Yes, cancellation and return options are available according
+            to our refund and return policy.
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h2 class="faq-question">7. How do I contact customer support?</h2>
+
+        <p class="faq-answer">
+            You can contact our support team through the Contact Us page
+            or email us directly for assistance.
+        </p>
+    </div>
+
+    <div class="faq-highlight">
+        Still have questions? Feel free to contact our support team anytime.
+    </div>
+
+    <p class="faq-footer">
+        © 2026 Traditional Products Marketplace. All Rights Reserved.
+    </p>
+
+</div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        background:#f4f6f9;
+        color:#333;
+    }
+
+    .contact-wrapper{
+        max-width:1100px;
+        margin:50px auto;
+        padding:20px;
+    }
+
+    .contact-title{
+        text-align:center;
+        font-size:40px;
+        margin-bottom:10px;
+        color:#1f2937;
+    }
+
+    .contact-subtitle{
+        text-align:center;
+        color:#666;
+        margin-bottom:40px;
+        font-size:15px;
+    }
+
+    .contact-container{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:30px;
+    }
+
+    /* Left Side */
+    .contact-info{
+        background:#ffffff;
+        padding:35px;
+        border-radius:12px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .contact-info h2{
+        margin-bottom:20px;
+        color:#111827;
+    }
+
+    .contact-info-box{
+        margin-bottom:25px;
+    }
+
+    .contact-info-box h3{
+        font-size:18px;
+        margin-bottom:8px;
+        color:#2563eb;
+    }
+
+    .contact-info-box p{
+        color:#555;
+        font-size:15px;
+        line-height:1.6;
+    }
+
+    /* Right Side */
+    .contact-form{
+        background:#ffffff;
+        padding:35px;
+        border-radius:12px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .contact-form h2{
+        margin-bottom:20px;
+        color:#111827;
+    }
+
+    .contact-input{
+        width:100%;
+        padding:13px 15px;
+        margin-bottom:18px;
+        border:1px solid #ddd;
+        border-radius:8px;
+        font-size:15px;
+        transition:0.3s;
+    }
+
+    .contact-input:focus{
+        border-color:#2563eb;
+        outline:none;
+        box-shadow:0 0 5px rgba(37,99,235,0.2);
+    }
+
+    textarea.contact-input{
+        resize:none;
+        height:140px;
+    }
+
+    .contact-btn{
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:8px;
+        background:linear-gradient(135deg,#2563eb,#3b82f6);
+        color:#fff;
+        font-size:16px;
+        font-weight:600;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    .contact-btn:hover{
+        background:linear-gradient(135deg,#1d4ed8,#2563eb);
+    }
+
+    @media(max-width:900px){
+        .contact-container{
+            grid-template-columns:1fr;
+        }
+    }
+
+    @media(max-width:600px){
+        .contact-title{
+            font-size:30px;
+        }
+
+        .contact-info,
+        .contact-form{
+            padding:25px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="contact-wrapper">
+
+    <h1 class="contact-title">Contact Us</h1>
+    <p class="contact-subtitle">
+        We'd love to hear from you. Get in touch with our team anytime.
+    </p>
+
+    <div class="contact-container">
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+
+            <h2>Get In Touch</h2>
+
+            <div class="contact-info-box">
+                <h3>Address</h3>
+                <p>Guwahati, Assam, India</p>
+            </div>
+
+            <div class="contact-info-box">
+                <h3>Email</h3>
+                <p>support@traditionalproducts.com</p>
+            </div>
+
+            <div class="contact-info-box">
+                <h3>Phone</h3>
+                <p>+91 98765 43210</p>
+            </div>
+
+            <div class="contact-info-box">
+                <h3>Working Hours</h3>
+                <p>Monday - Saturday : 9:00 AM - 7:00 PM</p>
+            </div>
+
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+
+            <h2>Send Message</h2>
+
+            <form>
+
+                <input type="text" placeholder="Your Name" class="contact-input" required>
+
+                <input type="email" placeholder="Your Email" class="contact-input" required>
+
+                <input type="text" placeholder="Subject" class="contact-input">
+
+                <textarea placeholder="Write Your Message..." class="contact-input"></textarea>
+
+                <button type="submit" class="contact-btn">Send Message</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+{% endblock content %}
