@@ -1,0 +1,182 @@
+{% extends "footer_base.html" %}
+
+{% block title %}Terms and Conditions{% endblock title %}
+
+{% block content %}
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        background:#f4f6f9;
+        color:#333;
+        line-height:1.7;
+    }
+
+    .terms-container{
+        max-width:900px;
+        margin:50px auto;
+        background:#fff;
+        padding:40px;
+        border-radius:12px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .terms-title{
+        text-align:center;
+        font-size:38px;
+        margin-bottom:10px;
+        color:#1f2937;
+    }
+
+    .terms-subtitle{
+        text-align:center;
+        color:#777;
+        margin-bottom:35px;
+        font-size:15px;
+    }
+
+    .terms-section{
+        margin-bottom:30px;
+    }
+
+    .terms-section h2{
+        font-size:24px;
+        margin-bottom:12px;
+        color:#111827;
+    }
+
+    .terms-section p{
+        font-size:15px;
+        color:#555;
+        margin-bottom:12px;
+    }
+
+    .terms-section ul{
+        padding-left:20px;
+    }
+
+    .terms-section ul li{
+        margin-bottom:10px;
+        color:#555;
+    }
+
+    .highlight-box{
+        background:#eef4ff;
+        border-left:5px solid #2563eb;
+        padding:15px;
+        border-radius:6px;
+        margin-top:15px;
+    }
+
+    .footer-note{
+        text-align:center;
+        margin-top:40px;
+        color:#888;
+        font-size:14px;
+    }
+
+    @media(max-width:768px){
+        .terms-container{
+            margin:20px;
+            padding:25px;
+        }
+
+        .terms-title{
+            font-size:30px;
+        }
+
+        .terms-section h2{
+            font-size:20px;
+        }
+    }
+</style>
+
+
+<div class="terms-container">
+
+    <h1 class="terms-title">Terms & Conditions</h1>
+    <p class="terms-subtitle">
+        Please read these terms and conditions carefully before using our platform.
+    </p>
+
+    <div class="terms-section">
+        <h2>1. Introduction</h2>
+        <p>
+            Welcome to our State Wise Traditional Products platform. By accessing or using this website,
+            you agree to comply with and be bound by these Terms & Conditions.
+        </p>
+    </div>
+
+    <div class="terms-section">
+        <h2>2. User Responsibilities</h2>
+        <ul>
+            <li>Provide accurate and complete information during registration.</li>
+            <li>Maintain the confidentiality of your account credentials.</li>
+            <li>Do not misuse the platform for fraudulent or illegal activities.</li>
+            <li>Respect sellers, buyers, and platform policies.</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>3. Seller Guidelines</h2>
+        <p>
+            Sellers must upload genuine products and valid documents before approval.
+            Any fake listing or misleading information may lead to account suspension.
+        </p>
+
+        <div class="highlight-box">
+            Sellers are responsible for product quality, delivery, and customer support.
+        </div>
+    </div>
+
+    <div class="terms-section">
+        <h2>4. Payments & Refunds</h2>
+        <p>
+            All payments are processed securely through online payment gateways.
+            Refund requests will be reviewed according to our refund policy.
+        </p>
+    </div>
+
+    <div class="terms-section">
+        <h2>5. Privacy Policy</h2>
+        <p>
+            We respect your privacy and protect your personal data. User information
+            will not be shared with third parties without consent, except when required by law.
+        </p>
+    </div>
+
+    <div class="terms-section">
+        <h2>6. Limitation of Liability</h2>
+        <p>
+            The platform is not responsible for delays, damages, or disputes caused by sellers,
+            courier services, or external factors beyond our control.
+        </p>
+    </div>
+
+    <div class="terms-section">
+        <h2>7. Changes to Terms</h2>
+        <p>
+            We may update these Terms & Conditions at any time. Continued use of the website
+            after changes means you accept the updated terms.
+        </p>
+    </div>
+
+    <div class="terms-section">
+        <h2>8. Contact Us</h2>
+        <p>
+            If you have any questions regarding these Terms & Conditions,
+            please contact our support team.
+        </p>
+    </div>
+
+    
+</div>
+
+{% endblock content %}
+

@@ -184,28 +184,7 @@
     </div>
 
 </div>
-<div class="full-faq">
-  <div class="faq-title">
-    <h2>FAQs</h2>
-  </div>
-  <div class="faq-section">
-  
-    <div class="faq-container">
 
-      {% for faq in faqs %}
-        <div class="faq-item">
-          <div class="faq-question" onclick="toggleFAQ(this)">
-            <span>{{faq.faq_question}}</span>
-              <span class="icon">⌃</span>
-          </div>
-          <div class="faq-answer">
-            <p>{{faq.faq_answer}}</p>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-</div>
 
 
 <div class="footer">

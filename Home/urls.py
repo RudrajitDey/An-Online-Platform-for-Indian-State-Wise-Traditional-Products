@@ -15,6 +15,8 @@ urlpatterns = [
     path('seller_login/', views.seller_login, name="seller_login"),
     path('vendor_dashboard/', views.vendor_dashboard, name="vendor_dashboard"),
     path('search/', views.search, name='search'),
+
+    path('terms_condition/', views.terms_condition, name='terms_condition'),
 ]
 
 if settings.DEBUG:

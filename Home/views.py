@@ -232,3 +232,6 @@ def search(request):
         'total_results': total_results,
     })
 
+def terms_condition(request):
+    return render(request, 'footer/terms_condition.html')
+
